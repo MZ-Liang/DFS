@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfs.api.mapper.user.RolePermissionMapper">
+
+  <sql id="select_column">
+    id, role_id, permission_id
+  </sql>
+
+  <sql id="where_condition">
+    <where>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT}
+      </if>
+      <if test="permissionId != null">
+        and permission_id = #{permissionId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </sql>
+
+  <insert id="insert" parameterType="com.dfs.api.entity.user.RolePermissionEntity">
+    insert into role_permission (id, role_id, permission_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT}
+      )
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from role_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.dfs.api.entity.user.RolePermissionEntity">
+    update role_permission
+    set role_id = #{roleId,jdbcType=BIGINT},
+      permission_id = #{permissionId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfs.api.entity.user.RolePermissionEntity">
+    update role_permission
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="permissionId != null">
+        permission_id = #{permissionId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.dfs.api.entity.user.RolePermissionEntity">
+    select 
+    <include refid="select_column" />
+    from role_permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCondition" parameterType="com.dfs.api.entity.user.RolePermissionEntity" resultType="com.dfs.api.entity.user.RolePermissionEntity">
+    select 
+    <include refid="select_column" />
+    from role_permission
+    <include refid="where_condition" />
+  </select>
+
+  <select id="countByCondition" parameterType="com.dfs.api.entity.user.RolePermissionEntity" resultType="java.lang.Integer">
+    select count(*) 
+    from role_permission
+    <include refid="where_condition" />
+  </select>
+</mapper>

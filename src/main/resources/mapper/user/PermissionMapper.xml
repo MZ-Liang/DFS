@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfs.api.mapper.user.PermissionMapper">
+
+  <sql id="select_column">
+    id, name, path, description
+  </sql>
+
+  <sql id="where_condition">
+    <where>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="path != null">
+        and path = #{path,jdbcType=VARCHAR}
+      </if>
+      <if test="description != null">
+        and description = #{description,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <insert id="insert" parameterType="com.dfs.api.entity.user.PermissionEntity">
+    insert into permission (id, name, path, 
+      description)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{description,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.dfs.api.entity.user.PermissionEntity">
+    update permission
+    set name = #{name,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfs.api.entity.user.PermissionEntity">
+    update permission
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.dfs.api.entity.user.PermissionEntity">
+    select 
+    <include refid="select_column" />
+    from permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCondition" parameterType="com.dfs.api.entity.user.PermissionEntity" resultType="com.dfs.api.entity.user.PermissionEntity">
+    select 
+    <include refid="select_column" />
+    from permission
+    <include refid="where_condition" />
+  </select>
+
+  <select id="countByCondition" parameterType="com.dfs.api.entity.user.PermissionEntity" resultType="java.lang.Integer">
+    select count(*) 
+    from permission
+    <include refid="where_condition" />
+  </select>
+  
+  <select id="getPermissionPathByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+    select path
+    from permission p, user_role ur, role_permission rm
+    where ur.role_id=rm.role_id and rm.permission_id=p.id and ur.user_id=#{userId,jdbcType=BIGINT}
+  </select>
+</mapper>

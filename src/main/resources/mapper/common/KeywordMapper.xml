@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfs.api.mapper.common.KeywordMapper">
+
+  <sql id="select_column">
+    id, name, name_en
+  </sql>
+
+  <sql id="where_condition">
+    <where>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="nameEn != null">
+        and name_en = #{nameEn,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <insert id="insert" parameterType="com.dfs.api.entity.common.KeywordEntity">
+    insert into keyword (id, name, name_en
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from keyword
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.dfs.api.entity.common.KeywordEntity">
+    update keyword
+    set name = #{name,jdbcType=VARCHAR},
+      name_en = #{nameEn,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfs.api.entity.common.KeywordEntity">
+    update keyword
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null">
+        name_en = #{nameEn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.dfs.api.entity.common.KeywordEntity">
+    select 
+    <include refid="select_column" />
+    from keyword
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCondition" parameterType="com.dfs.api.entity.common.KeywordEntity" resultType="com.dfs.api.entity.common.KeywordEntity">
+    select 
+    <include refid="select_column" />
+    from keyword
+    <include refid="where_condition" />
+  </select>
+
+  <select id="countByCondition" parameterType="com.dfs.api.entity.common.KeywordEntity" resultType="java.lang.Integer">
+    select count(*) 
+    from keyword
+    <include refid="where_condition" />
+  </select>
+  
+  <select id="getBasicModelByBookId" parameterType="java.lang.Long" resultType="com.dfs.api.model.BasicModel">
+    select k.id,k.name
+    from keyword k,book_keyword bk
+    where bk.book_id = #{bookId,jdbcType=BIGINT} and bk.keyword_id=k.id
+  </select>
+</mapper>

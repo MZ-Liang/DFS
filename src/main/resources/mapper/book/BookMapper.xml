@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfs.api.mapper.book.BookMapper">
+
+  <sql id="select_column">
+    id, book_name, book_name_en, deputy_name, deputy_name_en, status, error_code, book_type, 
+    publishing_institution, publishing_place, printing_time, edition_number, impression, 
+    isbn, writingmode, other_writingmode, local_upload_flag, ERT_flag, ERT_due_time, 
+    paper_book_price, ebook_price, creator, create_time, regenerator, update_time, publishing_time, 
+    issue_time, series, classification_number, 
+    classification, new_book_approval_number, data_sources, cover, reader, text_paper, 
+    binding, pages, word_number, package_book, first_print_number, format, unit_sheet, 
+    content_introduction, remark, shelf_suggestion, introduction, catalog, slogan, editor_recom, 
+    media_commentary, book_extract
+  </sql>
+  
+  <sql id="select_basic_column">
+  	id,book_name,deputy_name,edition_number,impression,isbn,local_upload_flag,creator,regenerator,remark
+  </sql>
+
+  <sql id="where_condition">
+    <where>
+      <if test="bookName != null">
+        book_name = #{bookName,jdbcType=VARCHAR}
+      </if>
+      <if test="bookNameEn != null">
+        and book_name_en = #{bookNameEn,jdbcType=VARCHAR}
+      </if>
+      <if test="deputyName != null">
+        and deputy_name = #{deputyName,jdbcType=VARCHAR}
+      </if>
+      <if test="deputyNameEn != null">
+        and deputy_name_en = #{deputyNameEn,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="errorCode != null">
+        and error_code = #{errorCode,jdbcType=BIGINT}
+      </if>
+      <if test="bookType != null">
+        and book_type = #{bookType,jdbcType=BIGINT}
+      </if>
+      <if test="publishingInstitution != null">
+        and publishing_institution = #{publishingInstitution,jdbcType=VARCHAR}
+      </if>
+      <if test="publishingPlace != null">
+        and publishing_place = #{publishingPlace,jdbcType=VARCHAR}
+      </if>
+      <if test="printingTime != null">
+        and printing_time = #{printingTime,jdbcType=BIGINT}
+      </if>
+      <if test="editionNumber != null">
+        and edition_number = #{editionNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="impression != null">
+        and impression = #{impression,jdbcType=VARCHAR}
+      </if>
+      <if test="isbn != null">
+        and isbn = #{isbn,jdbcType=VARCHAR}
+      </if>
+      <if test="writingmode != null">
+        and writingmode = #{writingmode,jdbcType=BIGINT}
+      </if>
+      <if test="otherWritingmode != null">
+        and other_writingmode = #{otherWritingmode,jdbcType=BIGINT}
+      </if>
+      <if test="localUploadFlag != null">
+        and local_upload_flag = #{localUploadFlag,jdbcType=TINYINT}
+      </if>
+      <if test="ertFlag != null">
+        and ERT_flag = #{ertFlag,jdbcType=TINYINT}
+      </if>
+      <if test="ertDueTime != null">
+        and ERT_due_time = #{ertDueTime,jdbcType=BIGINT}
+      </if>
+      <if test="paperBookPrice != null">
+        and paper_book_price = #{paperBookPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="ebookPrice != null">
+        and ebook_price = #{ebookPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="creator != null">
+        and creator = #{creator,jdbcType=BIGINT}
+      </if>
+      <if test="createTime != null">
+        and create_time = #{createTime,jdbcType=BIGINT}
+      </if>
+      <if test="regenerator != null">
+        and regenerator = #{regenerator,jdbcType=BIGINT}
+      </if>
+      <if test="updateTime != null">
+        and update_time = #{updateTime,jdbcType=BIGINT}
+      </if>
+      <if test="publishingTime != null">
+        and publishing_time = #{publishingTime,jdbcType=BIGINT}
+      </if>
+      <if test="issueTime != null">
+        and issue_time = #{issueTime,jdbcType=BIGINT}
+      </if>
+      <if test="series != null">
+        and series = #{series,jdbcType=BIGINT}
+      </if>
+      <if test="classificationNumber != null">
+        and classification_number = #{classificationNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="classification != null">
+        and classification = #{classification,jdbcType=VARCHAR}
+      </if>
+      <if test="newBookApprovalNumber != null">
+        and new_book_approval_number = #{newBookApprovalNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="dataSources != null">
+        and data_sources = #{dataSources,jdbcType=BIGINT}
+      </if>
+      <if test="cover != null">
+        and cover = #{cover,jdbcType=BIGINT}
+      </if>
+      <if test="reader != null">
+        and reader = #{reader,jdbcType=VARCHAR}
+      </if>
+      <if test="textPaper != null">
+        and text_paper = #{textPaper,jdbcType=VARCHAR}
+      </if>
+      <if test="binding != null">
+        and binding = #{binding,jdbcType=VARCHAR}
+      </if>
+      <if test="pages != null">
+        and pages = #{pages,jdbcType=BIGINT}
+      </if>
+      <if test="wordNumber != null">
+        and word_number = #{wordNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="packageBook != null">
+        and package_book = #{packageBook,jdbcType=VARCHAR}
+      </if>
+      <if test="firstPrintNumber != null">
+        and first_print_number = #{firstPrintNumber,jdbcType=DECIMAL}
+      </if>
+      <if test="format != null">
+        and format = #{format,jdbcType=VARCHAR}
+      </if>
+      <if test="unitSheet != null">
+        and unit_sheet = #{unitSheet,jdbcType=VARCHAR}
+      </if>
+      <if test="contentIntroduction != null">
+        and content_introduction = #{contentIntroduction,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="remark != null">
+        and remark = #{remark,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="shelfSuggestion != null">
+        and shelf_suggestion = #{shelfSuggestion,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="introduction != null">
+        and introduction = #{introduction,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="catalog != null">
+        and catalog = #{catalog,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="slogan != null">
+        and slogan = #{slogan,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="editorRecom != null">
+        and editor_recom = #{editorRecom,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="mediaCommentary != null">
+        and media_commentary = #{mediaCommentary,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="bookExtract != null">
+        and book_extract = #{bookExtract,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <insert id="insert" parameterType="com.dfs.api.entity.book.BookEntity">
+    insert into book (id, book_name, book_name_en, 
+      deputy_name, deputy_name_en, status, 
+      error_code, book_type, publishing_institution, 
+      publishing_place, printing_time, edition_number, 
+      impression, isbn, writingmode, 
+      other_writingmode, local_upload_flag, ERT_flag, 
+      ERT_due_time, paper_book_price, ebook_price, 
+      creator, create_time, regenerator, 
+      update_time, publishing_time, issue_time, 
+      series, 
+      classification_number, classification, new_book_approval_number, 
+      data_sources, cover, reader, 
+      text_paper, binding, pages, 
+      word_number, package_book, first_print_number, 
+      format, unit_sheet, content_introduction, 
+      remark, shelf_suggestion, introduction, 
+      catalog, slogan, editor_recom, 
+      media_commentary, book_extract)
+    values (#{id,jdbcType=BIGINT}, #{bookName,jdbcType=VARCHAR}, #{bookNameEn,jdbcType=VARCHAR}, 
+      #{deputyName,jdbcType=VARCHAR}, #{deputyNameEn,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{errorCode,jdbcType=BIGINT}, #{bookType,jdbcType=BIGINT}, #{publishingInstitution,jdbcType=VARCHAR}, 
+      #{publishingPlace,jdbcType=VARCHAR}, #{printingTime,jdbcType=BIGINT}, #{editionNumber,jdbcType=VARCHAR}, 
+      #{impression,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, #{writingmode,jdbcType=BIGINT}, 
+      #{otherWritingmode,jdbcType=BIGINT}, #{localUploadFlag,jdbcType=TINYINT}, #{ertFlag,jdbcType=TINYINT}, 
+      #{ertDueTime,jdbcType=BIGINT}, #{paperBookPrice,jdbcType=DECIMAL}, #{ebookPrice,jdbcType=DECIMAL}, 
+      #{creator,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{regenerator,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT}, #{publishingTime,jdbcType=BIGINT}, #{issueTime,jdbcType=BIGINT}, 
+      #{series,jdbcType=BIGINT},
+      #{classificationNumber,jdbcType=VARCHAR}, #{classification,jdbcType=VARCHAR}, #{newBookApprovalNumber,jdbcType=VARCHAR}, 
+      #{dataSources,jdbcType=BIGINT}, #{cover,jdbcType=BIGINT}, #{reader,jdbcType=VARCHAR}, 
+      #{textPaper,jdbcType=VARCHAR}, #{binding,jdbcType=VARCHAR}, #{pages,jdbcType=BIGINT}, 
+      #{wordNumber,jdbcType=VARCHAR}, #{packageBook,jdbcType=VARCHAR}, #{firstPrintNumber,jdbcType=DECIMAL}, 
+      #{format,jdbcType=VARCHAR}, #{unitSheet,jdbcType=VARCHAR}, #{contentIntroduction,jdbcType=LONGVARCHAR}, 
+      #{remark,jdbcType=LONGVARCHAR}, #{shelfSuggestion,jdbcType=LONGVARCHAR}, #{introduction,jdbcType=LONGVARCHAR}, 
+      #{catalog,jdbcType=LONGVARCHAR}, #{slogan,jdbcType=LONGVARCHAR}, #{editorRecom,jdbcType=LONGVARCHAR}, 
+      #{mediaCommentary,jdbcType=LONGVARCHAR}, #{bookExtract,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from book
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.dfs.api.entity.book.BookEntity">
+    update book
+    set book_name = #{bookName,jdbcType=VARCHAR},
+      book_name_en = #{bookNameEn,jdbcType=VARCHAR},
+      deputy_name = #{deputyName,jdbcType=VARCHAR},
+      deputy_name_en = #{deputyNameEn,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      error_code = #{errorCode,jdbcType=BIGINT},
+      book_type = #{bookType,jdbcType=BIGINT},
+      publishing_institution = #{publishingInstitution,jdbcType=VARCHAR},
+      publishing_place = #{publishingPlace,jdbcType=VARCHAR},
+      printing_time = #{printingTime,jdbcType=BIGINT},
+      edition_number = #{editionNumber,jdbcType=VARCHAR},
+      impression = #{impression,jdbcType=VARCHAR},
+      isbn = #{isbn,jdbcType=VARCHAR},
+      writingmode = #{writingmode,jdbcType=BIGINT},
+      other_writingmode = #{otherWritingmode,jdbcType=BIGINT},
+      local_upload_flag = #{localUploadFlag,jdbcType=TINYINT},
+      ERT_flag = #{ertFlag,jdbcType=TINYINT},
+      ERT_due_time = #{ertDueTime,jdbcType=BIGINT},
+      paper_book_price = #{paperBookPrice,jdbcType=DECIMAL},
+      ebook_price = #{ebookPrice,jdbcType=DECIMAL},
+      creator = #{creator,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      regenerator = #{regenerator,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      publishing_time = #{publishingTime,jdbcType=BIGINT},
+      issue_time = #{issueTime,jdbcType=BIGINT},
+      series = #{series,jdbcType=BIGINT},
+      classification_number = #{classificationNumber,jdbcType=VARCHAR},
+      classification = #{classification,jdbcType=VARCHAR},
+      new_book_approval_number = #{newBookApprovalNumber,jdbcType=VARCHAR},
+      data_sources = #{dataSources,jdbcType=BIGINT},
+      cover = #{cover,jdbcType=BIGINT},
+      reader = #{reader,jdbcType=VARCHAR},
+      text_paper = #{textPaper,jdbcType=VARCHAR},
+      binding = #{binding,jdbcType=VARCHAR},
+      pages = #{pages,jdbcType=BIGINT},
+      word_number = #{wordNumber,jdbcType=VARCHAR},
+      package_book = #{packageBook,jdbcType=VARCHAR},
+      first_print_number = #{firstPrintNumber,jdbcType=DECIMAL},
+      format = #{format,jdbcType=VARCHAR},
+      unit_sheet = #{unitSheet,jdbcType=VARCHAR},
+      content_introduction = #{contentIntroduction,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR},
+      shelf_suggestion = #{shelfSuggestion,jdbcType=LONGVARCHAR},
+      introduction = #{introduction,jdbcType=LONGVARCHAR},
+      catalog = #{catalog,jdbcType=LONGVARCHAR},
+      slogan = #{slogan,jdbcType=LONGVARCHAR},
+      editor_recom = #{editorRecom,jdbcType=LONGVARCHAR},
+      media_commentary = #{mediaCommentary,jdbcType=LONGVARCHAR},
+      book_extract = #{bookExtract,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfs.api.entity.book.BookEntity">
+    update book
+    <set>
+      <if test="bookName != null">
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookNameEn != null">
+        book_name_en = #{bookNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyName != null">
+        deputy_name = #{deputyName,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyNameEn != null">
+        deputy_name_en = #{deputyNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="errorCode != null">
+        error_code = #{errorCode,jdbcType=BIGINT},
+      </if>
+      <if test="bookType != null">
+        book_type = #{bookType,jdbcType=BIGINT},
+      </if>
+      <if test="publishingInstitution != null">
+        publishing_institution = #{publishingInstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="publishingPlace != null">
+        publishing_place = #{publishingPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="printingTime != null">
+        printing_time = #{printingTime,jdbcType=BIGINT},
+      </if>
+      <if test="editionNumber != null">
+        edition_number = #{editionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="impression != null">
+        impression = #{impression,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null">
+        isbn = #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="writingmode != null">
+        writingmode = #{writingmode,jdbcType=BIGINT},
+      </if>
+      <if test="otherWritingmode != null">
+        other_writingmode = #{otherWritingmode,jdbcType=BIGINT},
+      </if>
+      <if test="localUploadFlag != null">
+        local_upload_flag = #{localUploadFlag,jdbcType=TINYINT},
+      </if>
+      <if test="ertFlag != null">
+        ERT_flag = #{ertFlag,jdbcType=TINYINT},
+      </if>
+      <if test="ertDueTime != null">
+        ERT_due_time = #{ertDueTime,jdbcType=BIGINT},
+      </if>
+      <if test="paperBookPrice != null">
+        paper_book_price = #{paperBookPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="ebookPrice != null">
+        ebook_price = #{ebookPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="regenerator != null">
+        regenerator = #{regenerator,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="publishingTime != null">
+        publishing_time = #{publishingTime,jdbcType=BIGINT},
+      </if>
+      <if test="issueTime != null">
+        issue_time = #{issueTime,jdbcType=BIGINT},
+      </if>
+      <if test="series != null">
+        series = #{series,jdbcType=BIGINT},
+      </if>
+      <if test="classificationNumber != null">
+        classification_number = #{classificationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="classification != null">
+        classification = #{classification,jdbcType=VARCHAR},
+      </if>
+      <if test="newBookApprovalNumber != null">
+        new_book_approval_number = #{newBookApprovalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSources != null">
+        data_sources = #{dataSources,jdbcType=BIGINT},
+      </if>
+      <if test="cover != null">
+        cover = #{cover,jdbcType=BIGINT},
+      </if>
+      <if test="reader != null">
+        reader = #{reader,jdbcType=VARCHAR},
+      </if>
+      <if test="textPaper != null">
+        text_paper = #{textPaper,jdbcType=VARCHAR},
+      </if>
+      <if test="binding != null">
+        binding = #{binding,jdbcType=VARCHAR},
+      </if>
+      <if test="pages != null">
+        pages = #{pages,jdbcType=BIGINT},
+      </if>
+      <if test="wordNumber != null">
+        word_number = #{wordNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="packageBook != null">
+        package_book = #{packageBook,jdbcType=VARCHAR},
+      </if>
+      <if test="firstPrintNumber != null">
+        first_print_number = #{firstPrintNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="format != null">
+        format = #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="unitSheet != null">
+        unit_sheet = #{unitSheet,jdbcType=VARCHAR},
+      </if>
+      <if test="contentIntroduction != null">
+        content_introduction = #{contentIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shelfSuggestion != null">
+        shelf_suggestion = #{shelfSuggestion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="catalog != null">
+        catalog = #{catalog,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="slogan != null">
+        slogan = #{slogan,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="editorRecom != null">
+        editor_recom = #{editorRecom,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="mediaCommentary != null">
+        media_commentary = #{mediaCommentary,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bookExtract != null">
+        book_extract = #{bookExtract,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.dfs.api.entity.book.BookEntity">
+    select 
+    <include refid="select_column" />
+    from book
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCondition" parameterType="com.dfs.api.entity.book.BookEntity" resultType="com.dfs.api.entity.book.BookEntity">
+    select 
+    <include refid="select_column" />
+    from book
+    <include refid="where_condition" />
+  </select>
+
+  <select id="countByCondition" parameterType="com.dfs.api.entity.book.BookEntity" resultType="java.lang.Integer">
+    select count(*) 
+    from book
+    <include refid="where_condition" />
+  </select>
+  
+  <select id="getBasicModel" parameterType="java.lang.Long" resultType="com.dfs.api.entity.book.BookEntity">
+    select
+    	<include refid="select_basic_column" />
+    from book
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="searchBookBasicInfo" parameterType="com.dfs.api.model.book.BookSearchModel" resultType="com.dfs.api.model.book.BookBasicInfoModel">
+    select distinct b.id,b.book_name,b.paper_book_price
+    from 
+    	book b
+    	<if test="searchType == 3">,book_author ba,author a</if>
+    	<if test="seriesName != null or seriesExecutor != null">,series s</if>
+    	<if test="seriesExecutor != null">,user u</if>
+    	<if test="typesettingUnitId != null or productionUnitId != null">,book_unit bu</if>
+    	<if test="departmentId != null">,book_department bd</if>
+    	<if test="executiveEditorId != null or artEditorId != null or inspectorId != null
+    	 or operationEditorId != null or copyrightManagerId != null">
+    		,book_editor be
+    	</if>
+    	<if test="keywords != null">,book_keyword bk,keyword k</if>
+    <where>
+    	<if test="id != null"> b.id=#{id,jdbcType=BIGINT} </if>
+    	<if test="searchType == 1"> and b.book_name like concat(concat('%',#{searchWord,jdbcType=VARCHAR}),'%') </if>
+    	<if test="searchType == 2"> and b.content_introduction like concat(concat('%',#{searchWord,jdbcType=VARCHAR}),'%') </if>
+    	<if test="isbn != null"> and b.isbn=#{isbn,jdbcType=VARCHAR} </if>
+    	<if test="publishingPlace != null"> and b.publishing_place=#{publishingPlace,jdbcType=VARCHAR} </if>
+    	<if test="classificationNumber != null"> and b.classification_number=#{classificationNumber,jdbcType=VARCHAR} </if>
+    	<if test="errorCode != null"> and b.error_code=#{errorCode,jdbcType=BIGINT} </if>
+    	<if test="status != null"> and b.status=#{status,jdbcType=INTEGER} </if>
+    	<if test="ertFlag != null"> and b.ERT_flag=#{ertFlag,jdbcType=INTEGER} </if>
+    	<if test="ertDueTime != null"> and b.ERT_due_time=#{ertDueTime,jdbcType=BIGINT} </if>
+    	<if test="editionNumber != null"> and b.edition_number=#{editionNumber,jdbcType=VARCHAR} </if>
+    	<if test="impression != null"> and b.impression=#{impression,jdbcType=VARCHAR} </if>
+    	<if test="publishingInstitution != null"> and b.publishing_institution=#{publishingInstitution,jdbcType=VARCHAR} </if>
+    	<if test="updateTime != null"> and b.update_time=#{updateTime,jdbcType=BIGINT} </if>
+    	<if test="publishingTime != null"> and b.publishing_time=#{publishingTime,jdbcType=BIGINT} </if>
+    	<if test="issueTime != null"> and b.issue_time=#{issueTime,jdbcType=BIGINT} </if>
+    	<if test="dataSourceId != null"> and b.data_sources=#{dataSourceId,jdbcType=VARCHAR} </if>
+    	<if test="typesettingUnitId != null"> and b.id=#{id,jdbcType=VARCHAR} </if>
+    	
+    	<if test="typesettingUnitId != null or productionUnitId != null"> and b.id = bu.book_id</if>
+    	<if test="typesettingUnitId != null"> and bu.unit_id=#{typesettingUnitId,jdbcType=BIGINT}</if>
+    	<if test="productionUnitId != null"> and bu.unit_id=#{productionUnitId,jdbcType=BIGINT}</if>
+    	
+    	<if test="departmentId != null"> and b.id=bd.book_id and bd.department_id=#{departmentId,jdbcType=BIGINT}</if>
+    	
+    	<if test="executiveEditorId != null or artEditorId != null or inspectorId != null
+    	 or operationEditorId != null or copyrightManagerId != null">
+    		and b.id=be.book_id
+    	</if>
+    	<if test="executiveEditorId != null"> and be.editor_id=#{executiveEditorId,jdbcType=BIGINT}</if>
+    	<if test="artEditorId != null"> and be.editor_id=#{artEditorId,jdbcType=BIGINT}</if>
+    	<if test="inspectorId != null"> and be.editor_id=#{inspectorId,jdbcType=BIGINT}</if>
+    	<if test="operationEditorId != null"> and be.editor_id=#{operationEditorId,jdbcType=BIGINT}</if>
+    	<if test="copyrightManagerId != null"> and be.editor_id=#{copyrightManagerId,jdbcType=BIGINT}</if>
+    	
+    	<if test="seriesName != null or seriesExecutor != null"> and b.series=s.id </if>
+    	<if test="seriesName != null">  and s.name=#{seriesName,jdbcType=VARCHAR} </if>
+    	<if test="seriesExecutor != null"> and s.executor=u.id and u.nick_name=#{seriesExecutor,jdbcType=VARCHAR} </if>
+    	
+    	<if test="searchType == 3">
+    		and b.id=ba.book_id and ba.other_flag=0 and ba.author_id=a.id 
+    		and a.author_name like concat(concat('%',#{searchWord,jdbcType=VARCHAR}),'%') 
+    	</if>
+    	
+    	<if test="keywords != null">
+    		and b.id=bk.book_id and bk.keyword_id=k.id
+    		<foreach collection="keywords" item="word" open=" and (" separator=" or " close=")"> 
+    			k.name=#{word,jdbcType=VARCHAR}
+    		</foreach>
+		</if>
+    </where>
+  </select>
+  
+  <insert id="create" keyProperty="id" keyColumn="id" useGeneratedKeys="true" parameterType="com.dfs.api.entity.book.BookEntity">
+    insert into book(creator,create_time)
+    values(#{creator,jdbcType=BIGINT},#{createTime,jdbcType=BIGINT})
+  </insert>
+
+</mapper>

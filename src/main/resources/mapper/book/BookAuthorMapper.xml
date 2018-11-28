@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfs.api.mapper.book.BookAuthorMapper">
+
+  <sql id="select_column">
+    id, book_id, author_id, other_flag
+  </sql>
+
+  <sql id="where_condition">
+    <where>
+      <if test="bookId != null">
+        book_id = #{bookId,jdbcType=BIGINT}
+      </if>
+      <if test="authorId != null">
+        and author_id = #{authorId,jdbcType=BIGINT}
+      </if>
+      <if test="otherFlag != null">
+        and other_flag = #{otherFlag,jdbcType=TINYINT}
+      </if>
+    </where>
+  </sql>
+
+  <insert id="insert" parameterType="com.dfs.api.entity.book.BookAuthorEntity">
+    insert into book_author (id, book_id, author_id, 
+      other_flag)
+    values (#{id,jdbcType=BIGINT}, #{bookId,jdbcType=BIGINT}, #{authorId,jdbcType=BIGINT}, 
+      #{otherFlag,jdbcType=TINYINT})
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from book_author
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.dfs.api.entity.book.BookAuthorEntity">
+    update book_author
+    set book_id = #{bookId,jdbcType=BIGINT},
+      author_id = #{authorId,jdbcType=BIGINT},
+      other_flag = #{otherFlag,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfs.api.entity.book.BookAuthorEntity">
+    update book_author
+    <set>
+      <if test="bookId != null">
+        book_id = #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="otherFlag != null">
+        other_flag = #{otherFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.dfs.api.entity.book.BookAuthorEntity">
+    select 
+    <include refid="select_column" />
+    from book_author
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCondition" parameterType="com.dfs.api.entity.book.BookAuthorEntity" resultType="com.dfs.api.entity.book.BookAuthorEntity">
+    select 
+    <include refid="select_column" />
+    from book_author
+    <include refid="where_condition" />
+  </select>
+
+  <select id="countByCondition" parameterType="com.dfs.api.entity.book.BookAuthorEntity" resultType="java.lang.Integer">
+    select count(*) 
+    from book_author
+    <include refid="where_condition" />
+  </select>
+</mapper>

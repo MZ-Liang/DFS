@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfs.api.mapper.author.AuthorKeywordMapper">
+
+  <sql id="select_column">
+    id, author_id, keyword_id
+  </sql>
+
+  <sql id="where_condition">
+    <where>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=BIGINT}
+      </if>
+      <if test="keywordId != null">
+        and keyword_id = #{keywordId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </sql>
+
+  <insert id="insert" parameterType="com.dfs.api.entity.author.AuthorKeywordEntity">
+    insert into author_keyword (id, author_id, keyword_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{authorId,jdbcType=BIGINT}, #{keywordId,jdbcType=BIGINT}
+      )
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from author_keyword
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.dfs.api.entity.author.AuthorKeywordEntity">
+    update author_keyword
+    set author_id = #{authorId,jdbcType=BIGINT},
+      keyword_id = #{keywordId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfs.api.entity.author.AuthorKeywordEntity">
+    update author_keyword
+    <set>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="keywordId != null">
+        keyword_id = #{keywordId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.dfs.api.entity.author.AuthorKeywordEntity">
+    select 
+    <include refid="select_column" />
+    from author_keyword
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCondition" parameterType="com.dfs.api.entity.author.AuthorKeywordEntity" resultType="com.dfs.api.entity.author.AuthorKeywordEntity">
+    select 
+    <include refid="select_column" />
+    from author_keyword
+    <include refid="where_condition" />
+  </select>
+
+  <select id="countByCondition" parameterType="com.dfs.api.entity.author.AuthorKeywordEntity" resultType="java.lang.Integer">
+    select count(*) 
+    from author_keyword
+    <include refid="where_condition" />
+  </select>
+</mapper>

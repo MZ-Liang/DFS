@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfs.api.mapper.user.UserMapper">
+
+  <sql id="select_column">
+    id, user_name, nick_name, password, phone, mail
+  </sql>
+  
+  <sql id="where_condition">
+    <where>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+      <if test="nickName != null">
+        and nick_name = #{nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null">
+        and password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="phone != null">
+        and phone = #{phone,jdbcType=VARCHAR}
+      </if>
+      <if test="mail != null">
+        and mail = #{mail,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <insert id="insert" parameterType="com.dfs.api.entity.user.UserEntity">
+    insert into user (id, user_name, nick_name, 
+      password, phone, mail
+      )
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.dfs.api.entity.user.UserEntity">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfs.api.entity.user.UserEntity">
+    update user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.dfs.api.entity.user.UserEntity">
+    select 
+    <include refid="select_column" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCondition" parameterType="com.dfs.api.entity.user.UserEntity" resultType="com.dfs.api.entity.user.UserEntity">
+    select 
+    <include refid="select_column" />
+    from user
+    <include refid="where_condition" />
+  </select>
+
+  <select id="countByCondition" parameterType="com.dfs.api.entity.user.UserEntity" resultType="java.lang.Integer">
+    select count(*) 
+    from user
+    <include refid="where_condition" />
+  </select>
+  
+  <select id="getBasicModel" parameterType="java.lang.Long" resultType="com.dfs.api.model.BasicModel">
+    select id,nick_name name
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="getEditorModelModelByBookIdAndEditorType" resultType="com.dfs.api.model.user.EditorModel">
+    select u.id,u.nick_name name,be.editor_type,be.id relationId,be.book_id parentId
+    from user u,book_editor be
+    where be.user_id=u.id and be.book_id=#{bookId,jdbcType=BIGINT} and be.editor_type=#{editorType,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getEditorModel" parameterType="java.lang.Long" resultType="com.dfs.api.model.user.EditorModel">
+    select u.id,u.nick_name name,fe.editor_type
+    from user u,file_editor fe
+    where fe.user_id=u.id and fe.file_id=#{fileId,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

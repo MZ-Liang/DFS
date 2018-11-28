@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfs.api.mapper.user.RoleMapper">
+
+  <sql id="select_column">
+    id, role_name, creator, create_time, regenerator, update_time, description
+  </sql>
+
+  <sql id="where_condition">
+    <where>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR}
+      </if>
+      <if test="creator != null">
+        and creator = #{creator,jdbcType=BIGINT}
+      </if>
+      <if test="createTime != null">
+        and create_time = #{createTime,jdbcType=BIGINT}
+      </if>
+      <if test="regenerator != null">
+        and regenerator = #{regenerator,jdbcType=BIGINT}
+      </if>
+      <if test="updateTime != null">
+        and update_time = #{updateTime,jdbcType=BIGINT}
+      </if>
+      <if test="description != null">
+        and description = #{description,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <insert id="insert" parameterType="com.dfs.api.entity.user.RoleEntity">
+    insert into role (id, role_name, creator, 
+      create_time, regenerator, update_time, 
+      description)
+    values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{creator,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=BIGINT}, #{regenerator,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
+      #{description,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.dfs.api.entity.user.RoleEntity">
+    update role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      regenerator = #{regenerator,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfs.api.entity.user.RoleEntity">
+    update role
+    <set>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="regenerator != null">
+        regenerator = #{regenerator,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.dfs.api.entity.user.RoleEntity">
+    select 
+    <include refid="select_column" />
+    from role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByCondition" parameterType="com.dfs.api.entity.user.RoleEntity" resultType="com.dfs.api.entity.user.RoleEntity">
+    select 
+    <include refid="select_column" />
+    from role
+    <include refid="where_condition" />
+  </select>
+
+  <select id="countByCondition" parameterType="com.dfs.api.entity.user.RoleEntity" resultType="java.lang.Integer">
+    select count(*) 
+    from role
+    <include refid="where_condition" />
+  </select>
+  
+  <select id="getRoleNameByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+    select role_name 
+    from user_role ur,role r
+    where ur.role_id=r.id and ur.user_id=#{userId,jdbcType=BIGINT}
+  </select>
+</mapper>
