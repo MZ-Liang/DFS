@@ -133,6 +133,7 @@ public class UserController extends BasicController{
     	UserEntity condition=new UserEntity();
     	condition.setId(id);
     	condition.setPassword(EncryptUtility.encodeMD5(oldPassword));
+    	condition.setStatus(Code.OK);
     	
     	// 原密码不正确
     	if(CollectionUtils.isEmpty(userService.selectByCondition(condition))){
