@@ -23,7 +23,6 @@ import com.dfs.api.model.TokenModel;
 import com.dfs.api.service.user.UserService;
 import com.dfs.api.util.EncryptUtility;
 import com.dfs.api.util.HttpUtility;
-import com.dfs.api.util.ShiroUtil;
 
 /**
  * Controller层 不登录拦截
@@ -56,11 +55,12 @@ public class ControllerLoginInterceptor {
 		HttpServletRequest request = HttpUtility.getRequest();
 
 		// 判断登录
-		if (ShiroUtil.getUserId() == null) {
+		if (null == SecurityUtils.getSubject().getPrincipal()) {
 			// token处理
-			executeToken(request);
-			// 未登录，抛出异常
-			throw new NoLoginExceprion();
+			if (!executeToken(request)) {
+				// 未登录，抛出异常
+				throw new NoLoginExceprion();
+			}
 		}
 	}
 
