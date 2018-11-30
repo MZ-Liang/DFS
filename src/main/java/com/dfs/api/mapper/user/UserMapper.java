@@ -31,7 +31,7 @@ public interface UserMapper extends SimpleMapper<Long, UserEntity> {
 	 * @param editorType 编辑类型
 	 * @return
 	 */
-	List<EditorModel> getEditorModelModelByBookIdAndEditorType(@Param("bookId")Long bookId, @Param("editorType")Integer editorType);
+	List<EditorModel> getEditorModelByBookIdAndEditorType(@Param("bookId")Long bookId, @Param("editorType")Integer editorType);
 
 
 	/**

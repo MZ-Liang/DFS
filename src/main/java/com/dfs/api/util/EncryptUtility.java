@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -13,6 +14,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import com.alibaba.fastjson.JSONObject;
+import com.dfs.api.model.TokenModel;
 
 /**
  * 加密处理工具类
@@ -28,6 +33,9 @@ public class EncryptUtility {
 
 	// 加密类
 	private static Rijndael rijndael;
+	
+	// 位数
+	private static final int length=5;
 	
 	/**
 	 * MD5和Base64加密
@@ -211,4 +219,59 @@ public class EncryptUtility {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	/**
+	 * 获取随机字符串
+	 * @param length 长度
+	 * @return
+	 */
+	private static String getRandomString(final int length) {
+		StringBuilder stringBuilder=new StringBuilder();
+		Random random = new Random();  
+	    for (int i = 0; i < length; i++) {  
+	        if (random.nextBoolean()) {
+	        	 // 字符串  
+	        	 // 取得大写字母(65大写字母还是97小写字母)
+	             stringBuilder.append( (char) (65 + random.nextInt(26)));
+	         } else {
+	        	 // 数字  
+	             stringBuilder.append(random.nextInt(10));  
+	         }
+	     }
+	    return stringBuilder.toString();
+	}
+	
+	/**
+	 * 加密token
+	 * @param token token模型
+	 * @return
+	 */
+	public static String encodeToken(TokenModel token) {
+		StringBuilder stringBuilder=new StringBuilder();
+		stringBuilder.append("{\"accessKey\":\"");
+		stringBuilder.append(getRandomString(length));
+		stringBuilder.append(token.getAccessKey());
+		stringBuilder.append("\",\"secretKey\":\"");
+		stringBuilder.append(getRandomString(length));
+		stringBuilder.append(token.getSecretKey());
+		stringBuilder.append("\",\"client\":\"");
+		stringBuilder.append(token.getClient());
+		stringBuilder.append("\"}");
+		return encodeBase64(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
+	}
+	
+	/**
+	 * 解密token
+	 * @param token 加密后的token
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static TokenModel decodeToken(String token) throws UnsupportedEncodingException {
+		String string=new String(decodeBase64(token));
+		TokenModel tokenModel=JSONObject.parseObject(string, TokenModel.class);
+		tokenModel.setAccessKey(StringUtils.substring(tokenModel.getAccessKey(), length));
+		tokenModel.setSecretKey(StringUtils.substring(tokenModel.getSecretKey(), length));
+		return tokenModel;
+	}
+	
 }

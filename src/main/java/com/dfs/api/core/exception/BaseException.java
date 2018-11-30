@@ -16,11 +16,11 @@ public class BaseException extends UnknownAccountException {
 	/**
 	 * 错误码
 	 */
-	private Integer code;
+	protected Integer code;
 	/**
 	 * 消息
 	 */
-	private String message;
+	protected String message;
 	
 	public Integer getCode() {
 		return code;

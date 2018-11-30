@@ -47,6 +47,18 @@ public class Code {
 		 * 无权限
 		 */
 		public static final Integer ERROR_CODE_105=Integer.valueOf(105);
+		/**
+		 * token过期
+		 */
+		public static final Integer ERROR_CODE_106=Integer.valueOf(106);
+		/**
+		 * 无效token
+		 */
+		public static final Integer ERROR_CODE_107=Integer.valueOf(107);
+		/**
+		 * ip地址异常
+		 */
+		public static final Integer ERROR_CODE_108 = Integer.valueOf(108);
 	}
 
 }

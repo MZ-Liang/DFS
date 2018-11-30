@@ -145,23 +145,23 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			// 设置关联排版单位
 			model.setTypesettingUnit(bookUnitMapper.getRelationtBasicModelByBookId(model.getId(), UnitType.TYPESETTING_UNIT));
 			// 设置关联美术编辑
-			model.setArtEditor(userMapper.getEditorModelModelByBookIdAndEditorType(model.getId(), EditorType.ART_EDITOR));
+			model.setArtEditor(userMapper.getEditorModelByBookIdAndEditorType(model.getId(), EditorType.ART_EDITOR));
 
 			// 编辑基础模型
 			List<EditorModel> bms = null;
 
 			// 获取责任编辑
-			bms = userMapper.getEditorModelModelByBookIdAndEditorType(model.getId(), EditorType.EXECUTIVE_EDITOR);
+			bms = userMapper.getEditorModelByBookIdAndEditorType(model.getId(), EditorType.EXECUTIVE_EDITOR);
 			// 设置责任编辑
 			model.setExecutiveEditor(CollectionUtils.isEmpty(bms) ? null : bms.get(0));
 
 			// 获取运营编辑
-			bms = userMapper.getEditorModelModelByBookIdAndEditorType(model.getId(), EditorType.OPERATION_EDITOR);
+			bms = userMapper.getEditorModelByBookIdAndEditorType(model.getId(), EditorType.OPERATION_EDITOR);
 			// 设置运营编辑
 			model.setOperationEditor(CollectionUtils.isEmpty(bms) ? null : bms.get(0));
 
 			// 获取质检员
-			bms = userMapper.getEditorModelModelByBookIdAndEditorType(model.getId(), EditorType.INSPECTOR);
+			bms = userMapper.getEditorModelByBookIdAndEditorType(model.getId(), EditorType.INSPECTOR);
 			// 设置质检员
 			model.setInspector(CollectionUtils.isEmpty(bms) ? null : bms.get(0));
 		}
@@ -186,28 +186,28 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 		// 设置排版单位
 		model.setTypesettingUnit(bookUnitMapper.getRelationtBasicModelByBookId(entity.getId(), UnitType.TYPESETTING_UNIT));
 		// 设置美术编辑
-		model.setArtEditor(userMapper.getEditorModelModelByBookIdAndEditorType(entity.getId(), EditorType.ART_EDITOR));
+		model.setArtEditor(userMapper.getEditorModelByBookIdAndEditorType(entity.getId(), EditorType.ART_EDITOR));
 
 		// 编辑基础模型
 		List<EditorModel> list = null;
 
 		// 获取责任编辑
-		list = userMapper.getEditorModelModelByBookIdAndEditorType(entity.getId(), EditorType.EXECUTIVE_EDITOR);
+		list = userMapper.getEditorModelByBookIdAndEditorType(entity.getId(), EditorType.EXECUTIVE_EDITOR);
 		// 设置责任编辑
 		model.setExecutiveEditor(CollectionUtils.isEmpty(list) ? null : list.get(0));
 
 		// 获取运营编辑
-		list = userMapper.getEditorModelModelByBookIdAndEditorType(entity.getId(), EditorType.OPERATION_EDITOR);
+		list = userMapper.getEditorModelByBookIdAndEditorType(entity.getId(), EditorType.OPERATION_EDITOR);
 		// 设置运营编辑
 		model.setOperationEditor(CollectionUtils.isEmpty(list) ? null : list.get(0));
 
 		// 获取质检员
-		list = userMapper.getEditorModelModelByBookIdAndEditorType(entity.getId(), EditorType.INSPECTOR);
+		list = userMapper.getEditorModelByBookIdAndEditorType(entity.getId(), EditorType.INSPECTOR);
 		// 设置质检员
 		model.setInspector(CollectionUtils.isEmpty(list) ? null : list.get(0));
 
 		// 获取版权经理
-		list = userMapper.getEditorModelModelByBookIdAndEditorType(entity.getId(), EditorType.COPYRIGHT_MANAGER);
+		list = userMapper.getEditorModelByBookIdAndEditorType(entity.getId(), EditorType.COPYRIGHT_MANAGER);
 		// 设置版权经理
 		model.setCopyrightManager(CollectionUtils.isEmpty(list) ? null : list.get(0));
 	}
@@ -452,7 +452,7 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			for (RelationBasicModel basicModel : model.getDepartments()) {
 				bookDepartmentEntity=new BookDepartmentEntity();
 				bookDepartmentEntity.setId(basicModel.getRelationId());
-				bookDepartmentEntity.setBookId(basicModel.getParentId());
+				bookDepartmentEntity.setBookId(model.getId());
 				bookDepartmentEntity.setDepartmentId(basicModel.getId());
 				bookDepartmentEntities.add(bookDepartmentEntity);
 			}
@@ -483,7 +483,7 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			for (RelationBasicModel basicModel : unitList) {
 				bookUnitEntity=new BookUnitEntity();
 				bookUnitEntity.setId(basicModel.getRelationId());
-				bookUnitEntity.setBookId(basicModel.getParentId());
+				bookUnitEntity.setBookId(model.getId());
 				bookUnitEntity.setUnitId(basicModel.getId());
 				bookUnitEntities.add(bookUnitEntity);
 			}
@@ -521,7 +521,7 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			for (EditorModel editorModel : editorModels) {
 				bookEditorEntity=new BookEditorEntity();
 				bookEditorEntity.setId(editorModel.getRelationId());
-				bookEditorEntity.setBookId(editorModel.getParentId());
+				bookEditorEntity.setBookId(model.getId());
 				bookEditorEntity.setUserId(editorModel.getId());
 				bookEditorEntity.setEditorType(editorModel.getEditorType());
 				bookEditorEntities.add(bookEditorEntity);
@@ -538,7 +538,7 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			for (AuthorBasicModel authorBasicModel : model.getAuthors()) {
 				bookAuthorEntity=new BookAuthorEntity();
 				bookAuthorEntity.setId(authorBasicModel.getRelationId());
-				bookAuthorEntity.setBookId(authorBasicModel.getParentId());
+				bookAuthorEntity.setBookId(model.getId());
 				bookAuthorEntity.setAuthorId(authorBasicModel.getId());
 				bookAuthorEntity.setOtherFlag(AuthorConstant.OTHER_FLAG_0);
 				bookAuthorEntities.add(bookAuthorEntity);
@@ -550,7 +550,7 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			for (AuthorBasicModel authorBasicModel : model.getOtherAuthors()) {
 				bookAuthorEntity=new BookAuthorEntity();
 				bookAuthorEntity.setId(authorBasicModel.getRelationId());
-				bookAuthorEntity.setBookId(authorBasicModel.getParentId());
+				bookAuthorEntity.setBookId(model.getId());
 				bookAuthorEntity.setAuthorId(authorBasicModel.getId());
 				bookAuthorEntity.setOtherFlag(AuthorConstant.OTHER_FLAG_1);
 				bookAuthorEntities.add(bookAuthorEntity);
@@ -567,7 +567,7 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			for (RelationBasicModel basicModel : model.getKeywords()) {
 				bookKeywordEntity=new BookKeywordEntity();
 				bookKeywordEntity.setId(basicModel.getRelationId());
-				bookKeywordEntity.setBookId(basicModel.getParentId());
+				bookKeywordEntity.setBookId(model.getId());
 				bookKeywordEntity.setKeywordId(basicModel.getId());
 				bookKeywordEntities.add(bookKeywordEntity);
 			}
@@ -581,8 +581,8 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			if (bdEntity.getId()==null) {
 				bookDepartmentMapper.insert(bdEntity);
 			} else {
-				if (bdEntity.getBookId()!=null) {
-					bookDepartmentMapper.updateByPrimaryKeySelective(bdEntity);
+				if (bdEntity.getDepartmentId()!=null) {
+					bookDepartmentMapper.updateByPrimaryKey(bdEntity);
 				} else {
 					bookDepartmentMapper.deleteByPrimaryKey(bdEntity.getId());
 				}
@@ -594,8 +594,8 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			if (buEntity.getId()==null) {
 				bookUnitMapper.insert(buEntity);
 			} else {
-				if (buEntity.getBookId()!=null) {
-					bookUnitMapper.updateByPrimaryKeySelective(buEntity);
+				if (buEntity.getUnitId()!=null) {
+					bookUnitMapper.updateByPrimaryKey(buEntity);
 				} else {
 					bookUnitMapper.deleteByPrimaryKey(buEntity.getId());
 				}
@@ -607,8 +607,8 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			if (beEntity.getId()==null) {
 				bookEditorMapper.insert(beEntity);
 			} else {
-				if (beEntity.getBookId()!=null) {
-					bookEditorMapper.updateByPrimaryKeySelective(beEntity);
+				if (beEntity.getUserId()!=null) {
+					bookEditorMapper.updateByPrimaryKey(beEntity);
 				} else {
 					bookEditorMapper.deleteByPrimaryKey(beEntity.getId());
 				}
@@ -620,8 +620,8 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			if (baEntity.getId()==null) {
 				bookAuthorMapper.insert(baEntity);
 			} else {
-				if (baEntity.getBookId()!=null) {
-					bookAuthorMapper.updateByPrimaryKeySelective(baEntity);
+				if (baEntity.getAuthorId()!=null) {
+					bookAuthorMapper.updateByPrimaryKey(baEntity);
 				} else {
 					bookAuthorMapper.deleteByPrimaryKey(baEntity.getId());
 				}
@@ -633,8 +633,8 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			if (bkEntity.getId()==null) {
 				bookKeywordMapper.insert(bkEntity);
 			} else {
-				if (bkEntity.getBookId()!=null) {
-					bookKeywordMapper.updateByPrimaryKeySelective(bkEntity);
+				if (bkEntity.getKeywordId()!=null) {
+					bookKeywordMapper.updateByPrimaryKey(bkEntity);
 				} else {
 					bookKeywordMapper.deleteByPrimaryKey(bkEntity.getId());
 				}

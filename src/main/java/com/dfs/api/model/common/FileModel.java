@@ -2,8 +2,8 @@ package com.dfs.api.model.common;
 
 import java.io.Serializable;
 
-import com.dfs.api.core.entity.Entity;
 import com.dfs.api.model.BasicModel;
+import com.dfs.api.model.RelationBasicModel;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @date 2018年11月15日
  */
 @ApiModel(value="FileModel",description="文件模型")
-public class FileModel extends Entity implements Serializable {
+public class FileModel extends RelationBasicModel implements Serializable {
 
 	/** SerialVersionUID */
 	private static final long serialVersionUID = 1L;
@@ -393,36 +393,4 @@ public class FileModel extends Entity implements Serializable {
 		super();
 	}
 
-	/**
-	 * 取得文件表实体字符串
-	 * 
-	 * @return 文件表实体字符串
-	 */
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getClass().getSimpleName());
-		sb.append(" [");
-		sb.append("Hash = ").append(hashCode());
-		sb.append(", orderNumber=").append(orderNumber);
-		sb.append(", id=").append(id);
-		sb.append(", fileName=").append(fileName);
-		sb.append(", bucketName=").append(bucketName);
-		sb.append(", objectName=").append(objectName);
-		sb.append(", fileSize=").append(fileSize);
-		sb.append(", status=").append(status);
-		sb.append(", fileType=").append(fileType);
-		sb.append(", documentType=").append(documentType);
-		sb.append(", moduleType=").append(moduleType);
-		sb.append(", unitBM=").append(unitBM);
-		sb.append(", editor=").append(editor);
-		sb.append(", editorType=").append(editorType);
-		sb.append(", creatorBM=").append(creatorBM);
-		sb.append(", regeneratorBM=").append(regeneratorBM);
-		sb.append(", createTime=").append(createTime);
-		sb.append(", updateTime=").append(updateTime);
-		sb.append(", deleteTime=").append(deleteTime);
-		sb.append("]");
-		return sb.toString();
-	}
 }

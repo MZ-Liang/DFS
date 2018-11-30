@@ -30,6 +30,9 @@ public class UserEntity extends Entity implements Serializable {
 	/** 密码 */
 	@ApiModelProperty("密码")
 	private String password;
+	
+	@ApiModelProperty("状态（0：已删除 1：正常）")
+	private Integer status;
 
 	/** 手机号 */
 	@ApiModelProperty("手机号")
@@ -100,6 +103,14 @@ public class UserEntity extends Entity implements Serializable {
 	 */
 	public String getPhone() {
 		return phone;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	/**

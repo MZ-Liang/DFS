@@ -8,9 +8,9 @@
   </sql>
   
   <sql id="select_file_column">
-  	bf.order_number,
-    file.id, file.file_name, file.bucket_name, file.object_name, file.file_size, file.status, file.file_type, file.document_type, file.module_type, 
-    file.unit, file.creator, file.regenerator, file.create_time, file.update_time, file.delete_time
+  	bf.order_number,bf.book_id parentId,bf.id relationId,
+    f.id, f.file_name, f.bucket_name, f.object_name, f.file_size, f.status, f.file_type, f.document_type, f.module_type, 
+    f.unit, f.creator, f.regenerator, f.create_time, f.update_time, f.delete_time
   </sql>
 
   <sql id="where_condition">
@@ -171,17 +171,17 @@
   <select id="getFilesByBookIdAndFileType" resultType="com.dfs.api.model.common.FileEntityModel">
     select
     	<include refid="select_file_column" />
-    from file,book_file bf
+    from file f,book_file bf
     <where>
-    	bf.file_id=file.id and bf.book_id=#{bookId,jdbcType=BIGINT}
+    	bf.file_id=f.id and bf.book_id=#{bookId,jdbcType=BIGINT}
     	<if test="moduleType != null">
-    		and file.module_type=#{moduleType,jdbcType=INTEGER}
+    		and f.module_type=#{moduleType,jdbcType=INTEGER}
     	</if>
     	<if test="fileType != null">
-    		and file.file_type=#{fileType,jdbcType=INTEGER}
+    		and f.file_type=#{fileType,jdbcType=INTEGER}
     	</if>
     	<if test="status != null">
-    		and file.status=#{status,jdbcType=INTEGER}
+    		and f.status=#{status,jdbcType=INTEGER}
     	</if>
     </where>
   </select>

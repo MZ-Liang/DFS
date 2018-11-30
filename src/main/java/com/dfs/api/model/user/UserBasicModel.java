@@ -1,7 +1,5 @@
 package com.dfs.api.model.user;
 
-import java.io.Serializable;
-
 import com.dfs.api.core.entity.Entity;
 
 import io.swagger.annotations.ApiModel;
@@ -13,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @date 2018年11月15日
  */
 @ApiModel(value="UserBasicModel",description="用户基础模型")
-public class UserBasicModel extends Entity implements Serializable{
+public class UserBasicModel extends Entity{
 
 	/**
 	 * serialVersionUID
@@ -23,12 +21,12 @@ public class UserBasicModel extends Entity implements Serializable{
 	 * 账户名
 	 */
 	@ApiModelProperty("账户名")
-	private String userName;
+	protected String userName;
 	/**
 	 * 昵称
 	 */
 	@ApiModelProperty("昵称")
-	private String nickName;
+	protected String nickName;
 	
 	public String getUserName() {
 		return userName;

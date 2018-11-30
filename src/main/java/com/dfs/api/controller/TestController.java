@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import com.dfs.api.entity.book.BookEntity;
 import com.dfs.api.entity.user.UserEntity;
 import com.dfs.api.model.BasicModel;
 import com.dfs.api.model.HttpResult;
+import com.dfs.api.model.RelationBasicModel;
 import com.dfs.api.model.TokenModel;
 import com.dfs.api.model.user.UserBasicModel;
 import com.dfs.api.util.BeanUtils;
@@ -42,8 +44,8 @@ public class TestController extends BasicController{
 	private MinioUtil minioUtil;
 
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String test(BucketEnum bucketEnum) throws Exception {
-		System.out.println(bucketEnum);
+	public String test() throws Exception {
+		
 		return null;
 	}
 

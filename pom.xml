@@ -9,7 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>DFS</name>
+	<name>DFS-api</name>
 	<description>File deposit web project for Spring Boot</description>
 
 	<parent>
@@ -175,6 +175,13 @@
 			<groupId>io.minio</groupId>
 			<artifactId>minio</artifactId>
 			<version>5.0.2</version>
+		</dependency>
+
+		<!-- lombok --> 
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok --> 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 
 	</dependencies>

@@ -2,6 +2,7 @@ package com.dfs.api.service.common;
 
 import java.util.List;
 
+import com.dfs.api.constant.BucketEnum;
 import com.dfs.api.core.service.SimpleService;
 import com.dfs.api.entity.common.FileEntity;
 import com.dfs.api.model.common.FileModel;
@@ -35,9 +36,9 @@ public interface FileService extends SimpleService<Long, FileEntity>{
 	 * 保存或更新文件信息
 	 * @param id 模块中的实体id
 	 * @param files 文件模型集合
-	 * @param moduleType 模块类型
+	 * @param modulEnum 模块类型
 	 * @return
 	 */
-	Boolean saveOrUpdateFiles(Long id, List<FileModel> files, Integer moduleType);
+	Boolean saveOrUpdateFiles(Long id, List<FileModel> files, BucketEnum modulEnum);
 	
 }

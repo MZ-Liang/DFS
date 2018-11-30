@@ -3,7 +3,7 @@
 <mapper namespace="com.dfs.api.mapper.user.UserMapper">
 
   <sql id="select_column">
-    id, user_name, nick_name, password, phone, mail
+    id, user_name, nick_name, password, status, phone, mail
   </sql>
   
   <sql id="where_condition">
@@ -17,6 +17,9 @@
       <if test="password != null">
         and password = #{password,jdbcType=VARCHAR}
       </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=INTEGER}
+      </if>
       <if test="phone != null">
         and phone = #{phone,jdbcType=VARCHAR}
       </if>
@@ -28,10 +31,10 @@
 
   <insert id="insert" parameterType="com.dfs.api.entity.user.UserEntity">
     insert into user (id, user_name, nick_name, 
-      password, phone, mail
+      password, status, phone, mail
       )
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}
+      #{password,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}
       )
   </insert>
 
@@ -45,6 +48,7 @@
     set user_name = #{userName,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       phone = #{phone,jdbcType=VARCHAR},
       mail = #{mail,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
@@ -61,6 +65,9 @@
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
@@ -98,7 +105,7 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
-  <select id="getEditorModelModelByBookIdAndEditorType" resultType="com.dfs.api.model.user.EditorModel">
+  <select id="getEditorModelByBookIdAndEditorType" resultType="com.dfs.api.model.user.EditorModel">
     select u.id,u.nick_name name,be.editor_type,be.id relationId,be.book_id parentId
     from user u,book_editor be
     where be.user_id=u.id and be.book_id=#{bookId,jdbcType=BIGINT} and be.editor_type=#{editorType,jdbcType=INTEGER}
@@ -108,6 +115,12 @@
     select u.id,u.nick_name name,fe.editor_type
     from user u,file_editor fe
     where fe.user_id=u.id and fe.file_id=#{fileId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="listEditorBasicModel" parameterType="java.lang.Integer" resultType="com.dfs.api.model.BasicModel">
+    select u.id,u.nick_name name
+    from user u,user_role ur
+    where u.id=ur.user_id and ur.role_id=#{editor_type,jdbcType=INTEGER}
   </select>
   
 </mapper>
