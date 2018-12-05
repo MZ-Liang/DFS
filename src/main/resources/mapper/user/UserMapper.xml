@@ -29,7 +29,7 @@
     </where>
   </sql>
 
-  <insert id="insert" parameterType="com.dfs.api.entity.user.UserEntity">
+  <insert id="insert" parameterType="com.dfs.api.entity.user.UserEntity" useGeneratedKeys="true" keyProperty="id">
     insert into user (id, user_name, nick_name, 
       password, status, phone, mail
       )

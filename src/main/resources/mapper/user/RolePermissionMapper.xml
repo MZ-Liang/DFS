@@ -68,4 +68,5 @@
     from role_permission
     <include refid="where_condition" />
   </select>
+  
 </mapper>

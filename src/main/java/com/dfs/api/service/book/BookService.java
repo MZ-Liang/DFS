@@ -108,6 +108,6 @@ public interface BookService extends SimpleService<Long, BookEntity> {
 	 * @param model 图书元数据模型
 	 * @return
 	 */
-	boolean saveMetadata(BookMetadataModel model);
+	Boolean saveMetadata(BookMetadataModel model);
 
 }

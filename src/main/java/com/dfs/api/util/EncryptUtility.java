@@ -247,17 +247,9 @@ public class EncryptUtility {
 	 * @return
 	 */
 	public static String encodeToken(TokenModel token) {
-		StringBuilder stringBuilder=new StringBuilder();
-		stringBuilder.append("{\"accessKey\":\"");
-		stringBuilder.append(getRandomString(length));
-		stringBuilder.append(token.getAccessKey());
-		stringBuilder.append("\",\"secretKey\":\"");
-		stringBuilder.append(getRandomString(length));
-		stringBuilder.append(token.getSecretKey());
-		stringBuilder.append("\",\"client\":\"");
-		stringBuilder.append(token.getClient());
-		stringBuilder.append("\"}");
-		return encodeBase64(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
+		token.setAccessKey(getRandomString(length)+token.getAccessKey());
+		token.setSecretKey(getRandomString(length)+token.getSecretKey());
+		return encodeBase64(JSONObject.toJSONString(token).getBytes(StandardCharsets.UTF_8));
 	}
 	
 	/**
@@ -275,3 +267,4 @@ public class EncryptUtility {
 	}
 	
 }
+

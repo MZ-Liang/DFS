@@ -30,11 +30,12 @@ public interface UserService extends SimpleService<Long, UserEntity>{
 	Set<String> findPermissionPath(Long id);
 
 	/**
-	 * 根据用户名查找用户
+	 * 根据用户名和状态查找用户
 	 * @param userName 用户名
+	 * @param status 状态
 	 * @return
 	 */
-	UserEntity findByUserName(String userName);
+	UserEntity findByUserName(String userName,Integer status);
 
 	/**
 	 * 根据编辑类型获取编辑基本模型
@@ -47,7 +48,22 @@ public interface UserService extends SimpleService<Long, UserEntity>{
 	 * 创建或保存用户
 	 * @param userModel 用户模型
 	 * @return
+	 * @throws Exception 
 	 */
-	UserModel saveOrUpdate(UserModel userModel);
+	UserModel saveOrUpdate(UserModel userModel) throws Exception;
+
+	/**
+	 * 批量删除用户（逻辑处理）
+	 * @param ids 用户id集合
+	 * @return
+	 */
+	Boolean delete(List<Long> ids) throws Exception ;
+
+	/**
+	 * 更新用户密码
+	 * @param condition 条件
+	 * @return
+	 */
+	Boolean updatePassword(UserEntity condition) throws Exception ;
 
 }

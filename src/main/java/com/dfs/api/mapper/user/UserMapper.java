@@ -24,7 +24,7 @@ public interface UserMapper extends SimpleMapper<Long, UserEntity> {
 	 * @return
 	 */
 	BasicModel getBasicModel(Long id);
-	
+
 	/**
 	 * 获取图书的编辑用户基础模型
 	 * @param bookId 图书id

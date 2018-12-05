@@ -107,7 +107,7 @@ public class ShiroConfig {
     
     
     /**
-     * 权限管理，配置主要是Realm的管理认证
+             * 权限管理，配置主要是Realm的管理认证
      * @return SecurityManager
      */
     @Bean
@@ -155,7 +155,7 @@ public class ShiroConfig {
     /**
      * cacheManager 缓存 redis实现
      *
-     * 使用的是shiro-redis开源插件
+             * 使用的是shiro-redis开源插件
      *
      * @return
      */
@@ -169,7 +169,7 @@ public class ShiroConfig {
     /**
      * RedisSessionDAO shiro sessionDao层的实现 通过redis
      * 
-     * 使用的是shiro-redis开源插件
+             * 使用的是shiro-redis开源插件
      */
     @Bean
     public RedisSessionDAO redisSessionDAO() {

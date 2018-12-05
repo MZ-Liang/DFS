@@ -15,6 +15,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.dfs.api.constant.Code;
 import com.dfs.api.core.exception.InvalidTokenException;
 import com.dfs.api.core.exception.IpAddressException;
 import com.dfs.api.core.exception.NoLoginExceprion;
@@ -93,6 +94,7 @@ public class ControllerLoginInterceptor {
 		UserEntity condition = new UserEntity();
 		condition.setUserName(tokenModel.getAccessKey());
 		condition.setPassword(EncryptUtility.encodeMD5(tokenModel.getSecretKey()));
+		condition.setStatus(Code.OK);
 		// token无效
 		if (CollectionUtils.isEmpty(userService.selectByCondition(condition))) {
 			throw new InvalidTokenException();

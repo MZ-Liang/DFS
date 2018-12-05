@@ -74,7 +74,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
 		String password = String.valueOf(token.getPassword());
 
 		// 数据库用户信息
-		UserEntity userEntity = userService.findByUserName(userName);
+		UserEntity userEntity = userService.findByUserName(userName,Code.OK);
 
 		if (userEntity == null || userEntity.getStatus()==Code.ERROR) {
 			throw new NoUserException();
@@ -82,8 +82,6 @@ public class AuthenticationRealm extends AuthorizingRealm {
 			throw new PasswordErrorException();
 		} else {
 			String userPassword = userEntity.getPassword();
-			// session存储去掉密码
-			userEntity.setPassword(null);
 			// 这里验证authenticationToken和simpleAuthenticationInfo的信息
 			SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(userEntity, userPassword,
 					getName());

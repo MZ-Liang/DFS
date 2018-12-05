@@ -127,10 +127,9 @@ public class BookController extends BasicController{
 	
 	@ApiOperation(value="保存图书元数据",notes="")
 	@PostMapping("/saveMetadata")
-	public ReturnMsg<BookEntity> saveMetadata(Integer option, @ApiParam("文件模型集合") @RequestBody BookMetadataModel model) {
+	public ReturnMsg<Boolean> saveMetadata(Integer option, @ApiParam("文件模型集合") @RequestBody BookMetadataModel model) {
 		// 保存
-		bookService.saveMetadata(model);
-		return getSuccessMsg(null);
+		return getSuccessMsg(bookService.saveMetadata(model));
 	}
 	
 	@ApiOperation(value="保存图书文件数据",notes="批处理")

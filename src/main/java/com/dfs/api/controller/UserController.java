@@ -1,6 +1,8 @@
 package com.dfs.api.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +12,9 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,8 +64,8 @@ public class UserController extends BasicController{
     	@ApiImplicitParam(name="password",value="密码",paramType="query",required=true,dataType="String"),
     })
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(String userName, String password ,HttpServletRequest request) throws Exception{
-    	String message="";
+    public Map<String, Object> login(String userName, String password ,HttpServletRequest request) throws Exception{
+    	String data="";
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
         //创建token
@@ -72,8 +75,12 @@ public class UserController extends BasicController{
 		
 		// 登录成功,生成token
 		TokenModel tokenModel=new TokenModel(userName, password, HttpUtility.getClientIp(request));
-		message=EncryptUtility.encodeToken(tokenModel);
-        return message;
+		data=EncryptUtility.encodeToken(tokenModel);
+		Map<String, Object> map=new HashMap<>();
+		map.put("code", Code.OK);
+		map.put("msg", "登录成功");
+		map.put("data", data);
+        return map;
     }
     
     @ApiOperation(value="创建用户",notes="创建新用户，并分配角色")
@@ -81,7 +88,7 @@ public class UserController extends BasicController{
     	@ApiImplicitParam(name="userName",value="用户名",required=true,paramType="query",dataType="string"),
     	@ApiImplicitParam(name="password",value="密码",required=true,paramType="query",dataType="string"),
     })
-    @PutMapping("/user/create")
+    @PostMapping("/user/create")
     public ReturnMsg<UserModel> createUser(String userName,String password,
     		@ApiParam("用户与角色关联模型") @RequestBody List<RelationBasicModel> userRoleRelations) throws Exception {
     	// 检查用户名是否可用
@@ -143,13 +150,19 @@ public class UserController extends BasicController{
     	else {
 			// 更改条件
     		condition.setPassword(EncryptUtility.encodeMD5(newPassword));
-    		if (userService.updateBySelective(condition)) {
+    		if (userService.updatePassword(condition)) {
         		msg=getSuccessMsg("密码修改成功",null);
 			}
 		}
     	
     	return msg;
     }
+    
+    @ApiOperation(value="逻辑删除用户",notes="批量删除")
+    @DeleteMapping("/delete")
+    public ReturnMsg<Boolean> delete(List<Long> ids) throws Exception {
+		return getSuccessMsg(userService.delete(ids));
+	}
     
     @ApiOperation(value="获取权限",notes="获取当前用户全部权限")
     @RequestMapping(value="/user/permissions",method=RequestMethod.GET)

@@ -412,8 +412,8 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 	 * @return
 	 */
 	@Override
-	public boolean saveMetadata(BookMetadataModel model) {
-		boolean bln=false;
+	public Boolean saveMetadata(BookMetadataModel model) {
+		Boolean bln=Boolean.FALSE;
 		// 时间
 		Long time=CalendarUtility.getSystemAccurateTime();
 		
@@ -641,7 +641,7 @@ public class BookServiceImpl extends SimpleServiceImpl<Long, BookEntity> impleme
 			}
 		}
 		
-		bln=true;
+		bln=Boolean.TRUE;
 		return bln;
 	}
 

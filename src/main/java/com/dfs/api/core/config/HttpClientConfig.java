@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.dfs.api.util.HttpClientUtil;
+
 /**
  * HttpClient配置类
  * @author Ming
@@ -34,7 +36,7 @@ public class HttpClientConfig {
  
     @Value("${http.staleConnectionCheckEnabled}")
     private boolean staleConnectionCheckEnabled;
- 
+    
     /**
      * 首先实例化一个连接池管理器，设置最大连接数、并发连接数
      * @return
@@ -71,7 +73,7 @@ public class HttpClientConfig {
      * @param httpClientBuilder
      * @return
      */
-    @Bean
+    @Bean(name="closeableHttpClient")
     public CloseableHttpClient getCloseableHttpClient(@Qualifier("httpClientBuilder") HttpClientBuilder httpClientBuilder){
         return httpClientBuilder.build();
     }
@@ -98,9 +100,20 @@ public class HttpClientConfig {
      * @param builder
      * @return
      */
-    @Bean
+    @Bean(name="requestConfig")
     public RequestConfig getRequestConfig(@Qualifier("builder") RequestConfig.Builder builder){
         return builder.build();
     }
- 
+    
+   /**
+    * 注入HttpClient服务工具类
+    * @param httpClient
+    * @param requestConfig
+    * @return
+    */
+    @Bean
+    public HttpClientUtil getHttpClientUtil(@Qualifier("closeableHttpClient")CloseableHttpClient httpClient,
+    		@Qualifier("requestConfig")RequestConfig requestConfig) {
+		return new HttpClientUtil(httpClient, requestConfig);
+	}
 }
