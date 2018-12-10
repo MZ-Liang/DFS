@@ -55,7 +55,7 @@ public class MinioController extends BasicController{
 			@ApiImplicitParam(name = "id", value = "id", paramType = "query", required = true, dataType = "Long"),
 			@ApiImplicitParam(name = "fileType", value = "文件所属类型（1:编辑原稿 2:正文排版文件 3:封面扉页设计文件 4:设计素材文件 5:其他排版设计文件"
 					+ " 6:条形码 7:封面扉页印刷文件 8:版权页文件 9:付型文件 10:其他印刷文件 11:封面(缩略图) 12:扉页(缩略图)"
-					+ " 13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书）", paramType = "query", required = true, dataType = "Long"),
+					+ " 13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书 19:封面）", paramType = "query", required = true, dataType = "Long"),
 			@ApiImplicitParam(name = "suffix", value = "文件后缀(如：.jpg)", paramType = "query", required = true, dataType = "String"), 
 			@ApiImplicitParam(name = "bucketEnum", value = "模块类型", paramType = "query", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "expires", value = "生效时间（单位秒）", paramType = "query", required = false, dataType = "int"),
@@ -75,7 +75,7 @@ public class MinioController extends BasicController{
 		} else {
 			actionModel = minioUtil.presignedPutObject(bucketEnum.getName(), objectName,expires);
 		}
-		actionModel.setBucketName(BucketEnum.BOOK.getName());
+		actionModel.setBucketName(bucketEnum.getName());
 		actionModel.setObjectName(objectName);
 		return getSuccessMsg(actionModel);
 	}

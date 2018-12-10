@@ -44,6 +44,24 @@ public class CalendarUtility {
 	}
 
 	/**
+	 * 取得系统时间（精确到毫秒）
+	 * 
+	 * @return 系统时间
+	 */
+	public static long getSystemMillisecondTime() {
+		Calendar ca = Calendar.getInstance();
+		int year = ca.get(Calendar.YEAR);
+		int month = ca.get(Calendar.MONTH);
+		int day = ca.get(Calendar.DATE);
+		int hour = ca.get(Calendar.HOUR_OF_DAY);
+		int minute = ca.get(Calendar.MINUTE);
+		int second = ca.get(Calendar.SECOND);
+		int millisecond = ca.get(Calendar.MILLISECOND);
+		return year * 1000000000000l + (month + 1) * 10000000000l + day * 100000000l + hour * 1000000l + minute * 10000l
+				+ second * 100l + millisecond;
+	}
+
+	/**
 	 * 取得指定格式系统时间
 	 * 
 	 * @return 系统时间
@@ -72,7 +90,7 @@ public class CalendarUtility {
 		int second = ca.get(Calendar.SECOND);
 		return year * 10000000000l + (month + 1) * 100000000l + day * 1000000l + hour * 10000l + minute * 100l + second;
 	}
-	
+
 	/**
 	 * 取得距现在指定天数的日期
 	 * 
@@ -96,7 +114,7 @@ public class CalendarUtility {
 	 * 
 	 * @param date 日期
 	 * @return 日期对象
-	 * @throws Exception 
+	 * @throws Exception
 	 * @throws IncorrectParameterException 参数异常
 	 */
 	public static Calendar getCalendar(long date) throws Exception {
@@ -129,7 +147,7 @@ public class CalendarUtility {
 	 * @param date1 日期1
 	 * @param date2 日期2
 	 * @return 间隔分钟
-	 * @throws Exception 
+	 * @throws Exception
 	 * @throws IncorrectParameterException 参数异常
 	 */
 	public static long getSecondInterval(long date1, long date2) throws Exception {
@@ -137,14 +155,14 @@ public class CalendarUtility {
 		Calendar c2 = CalendarUtility.getCalendar(date2);
 		return (c2.getTimeInMillis() - c1.getTimeInMillis()) / 1000;
 	}
-	
+
 	/**
 	 * 取得两个日期的间隔分钟
 	 * 
 	 * @param date1 日期1
 	 * @param date2 日期2
 	 * @return 间隔分钟
-	 * @throws Exception 
+	 * @throws Exception
 	 * @throws IncorrectParameterException 参数异常
 	 */
 	public static long getMinuteInterval(long date1, long date2) throws Exception {
@@ -156,7 +174,7 @@ public class CalendarUtility {
 	/**
 	 * Calendar类型对象转字符串
 	 * 
-	 * @param param Calendar类型对象
+	 * @param param   Calendar类型对象
 	 * @param pattern 显示模式
 	 * @return 日期字符串
 	 * @throws ParseException Parse异常
@@ -165,11 +183,11 @@ public class CalendarUtility {
 		DateFormat dateFormat = new SimpleDateFormat(pattern);
 		return dateFormat.format(param.getTime());
 	}
-	
+
 	/**
 	 * Date类型对象转字符串
 	 * 
-	 * @param param Date类型对象
+	 * @param param   Date类型对象
 	 * @param pattern 显示模式
 	 * @return 日期字符串
 	 * @throws ParseException Parse异常

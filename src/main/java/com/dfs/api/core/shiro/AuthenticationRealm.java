@@ -12,7 +12,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dfs.api.constant.Code;
+import com.dfs.api.constant.StatusConstant;
 import com.dfs.api.core.exception.NoUserException;
 import com.dfs.api.core.exception.PasswordErrorException;
 import com.dfs.api.entity.user.UserEntity;
@@ -74,9 +74,9 @@ public class AuthenticationRealm extends AuthorizingRealm {
 		String password = String.valueOf(token.getPassword());
 
 		// 数据库用户信息
-		UserEntity userEntity = userService.findByUserName(userName,Code.OK);
+		UserEntity userEntity = userService.findByUserName(userName,StatusConstant.NORMAL);
 
-		if (userEntity == null || userEntity.getStatus()==Code.ERROR) {
+		if (userEntity == null || userEntity.getStatus()==StatusConstant.DELETED) {
 			throw new NoUserException();
 		} else if (!userEntity.getPassword().equals(password)) {
 			throw new PasswordErrorException();

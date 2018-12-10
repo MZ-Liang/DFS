@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.dfs.api.entity.common.FileEntity;
 import com.dfs.api.model.BasicModel;
-import com.dfs.api.model.ImageBasicModel;
 import com.dfs.api.model.RelationBasicModel;
 import com.dfs.api.model.author.AuthorBasicModel;
 
@@ -118,7 +118,7 @@ public class BookMetadataModel extends BookBasicModel implements Serializable {
 
 	/** 封面 */
 	@ApiModelProperty("封面")
-	private ImageBasicModel coverBM;
+	private FileEntity coverEntity;
 
 	/** 读者对象 */
 	@ApiModelProperty("读者对象")
@@ -601,8 +601,8 @@ public class BookMetadataModel extends BookBasicModel implements Serializable {
 	 * 
 	 * @return 封面
 	 */
-	public ImageBasicModel getCoverBM() {
-		return coverBM;
+	public FileEntity getCoverEntity() {
+		return coverEntity;
 	}
 
 	/**
@@ -610,8 +610,8 @@ public class BookMetadataModel extends BookBasicModel implements Serializable {
 	 * 
 	 * @param cover 封面
 	 */
-	public void setCoverBM(ImageBasicModel coverBM) {
-		this.coverBM = coverBM;
+	public void setCoverEntity(FileEntity coverEntity) {
+		this.coverEntity = coverEntity;
 	}
 
 	/**
@@ -998,7 +998,7 @@ public class BookMetadataModel extends BookBasicModel implements Serializable {
 				+ ebookPrice + ", createTime=" + createTime + ", updateTime=" + updateTime + ", publishingTime="
 				+ publishingTime + ", issueTime=" + issueTime + ", seriesModel=" + seriesModel + ", classificationNumber="
 				+ classificationNumber + ", classification=" + classification + ", newBookApprovalNumber="
-				+ newBookApprovalNumber + ", dataSourcesBM=" + dataSourcesBM + ", coverBM=" + coverBM + ", reader=" + reader
+				+ newBookApprovalNumber + ", dataSourcesBM=" + dataSourcesBM + ", coverEntity=" + coverEntity + ", reader=" + reader
 				+ ", textPaper=" + textPaper + ", binding=" + binding + ", pages=" + pages + ", wordNumber="
 				+ wordNumber + ", packageBook=" + packageBook + ", firstPrintNumber=" + firstPrintNumber + ", format="
 				+ format + ", unitSheet=" + unitSheet + ", contentIntroduction=" + contentIntroduction

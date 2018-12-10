@@ -111,7 +111,7 @@ public class HttpClientConfig {
     * @param requestConfig
     * @return
     */
-    @Bean
+    @Bean(name="httpClientUtil")
     public HttpClientUtil getHttpClientUtil(@Qualifier("closeableHttpClient")CloseableHttpClient httpClient,
     		@Qualifier("requestConfig")RequestConfig requestConfig) {
 		return new HttpClientUtil(httpClient, requestConfig);

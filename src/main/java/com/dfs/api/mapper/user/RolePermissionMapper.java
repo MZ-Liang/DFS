@@ -14,4 +14,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RolePermissionMapper extends SimpleMapper<Long, RolePermissionEntity> {
 
+	/**
+	 * 根据角色id删除
+	 * @param roleId 角色id
+	 * @return
+	 */
+	int deleteByRoleId(Long roleId);
+
 }

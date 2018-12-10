@@ -6,7 +6,7 @@ import java.util.List;
 import com.dfs.api.core.entity.Entity;
 import com.dfs.api.model.BasicModel;
 import com.dfs.api.model.RelationBasicModel;
-import com.dfs.api.model.user.EditorModel;
+import com.dfs.api.model.common.EditorModel;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

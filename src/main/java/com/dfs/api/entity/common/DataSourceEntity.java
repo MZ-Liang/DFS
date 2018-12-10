@@ -4,21 +4,27 @@ import java.io.Serializable;
 
 import com.dfs.api.core.entity.Entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 数据来源表实体
  * 
  * @author Ming
  * @date 2018-11-13
  */
+@ApiModel(value="DataSourceEntity",description="数据来源表实体")
 public class DataSourceEntity extends Entity implements Serializable {
 
 	/** SerialVersionUID */
 	private static final long serialVersionUID = 1L;
 
 	/** 名称 */
+	@ApiModelProperty("名称")
 	private String name;
 
 	/** 名称(英文) */
+	@ApiModelProperty("名称(英文)")
 	private String nameEn;
 
 	/**

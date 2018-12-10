@@ -53,7 +53,7 @@ public class HttpClientUtil {
 	 * 
 	 * @param requestUrl    请求路径
 	 * @param authorization 身份信息
-	 * @param body          请求参数（json）
+	 * @param body          body请求参数（json）
 	 * @return
 	 * @throws Exception
 	 */
@@ -66,7 +66,7 @@ public class HttpClientUtil {
 
 		// 添加json参数
 		if (StringUtils.isNoneBlank(body)) {
-			StringEntity params = new StringEntity(body, "UTF-8");
+			StringEntity params = new StringEntity(body, StandardCharsets.UTF_8);
 			httpPost.setEntity(params);
 		}
 
@@ -78,7 +78,7 @@ public class HttpClientUtil {
 	 * 
 	 * @param requestUrl    请求路径
 	 * @param authorization 身份信息
-	 * @param body          请求参数（json）
+	 * @param body          body请求参数（json）
 	 * @return
 	 * @throws Exception
 	 */
@@ -91,7 +91,7 @@ public class HttpClientUtil {
 
 		// 添加json参数
 		if (StringUtils.isNoneBlank(body)) {
-			StringEntity params = new StringEntity(body, "UTF-8");
+			StringEntity params = new StringEntity(body, StandardCharsets.UTF_8);
 			httpPut.setEntity(params);
 		}
 

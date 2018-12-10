@@ -4,12 +4,15 @@ import java.io.Serializable;
 
 import com.dfs.api.core.entity.Entity;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * 文件表实体
  * 
  * @author Ming
  * @date 2018-11-13
  */
+@ApiModel
 public class FileEntity extends Entity implements Serializable {
 
 	/** SerialVersionUID */
@@ -27,6 +30,12 @@ public class FileEntity extends Entity implements Serializable {
 	/** 文件大小 */
 	private String fileSize;
 
+	/** 文件尺寸 */
+	private String fileDimension;
+	
+	/** 时长 */
+	private String duration;
+	
 	/** 状态(1:正常 0:删除) */
 	private Integer status;
 
@@ -35,7 +44,7 @@ public class FileEntity extends Entity implements Serializable {
 
 	/** 所属文件类型(1:编辑原稿 2:正文排版文件 3:封面扉页设计文件 4:设计素材文件 5:其他排版设计文件
 	 *  6:条形码 7:封面扉页印刷文件 8:版权页文件 9:付型文件 10:其他印刷文件 11:封面(缩略图) 12:扉页(缩略图) 
-	 *  13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书) */
+	 *  13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书 19:封面) */
 	private Integer documentType;
 
 	/** 所属模块类型(1:图书 2:文集) */
@@ -154,6 +163,37 @@ public class FileEntity extends Entity implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	
+	/**
+	 * 获取文件尺寸
+	 * @return
+	 */
+	public String getFileDimension() {
+		return fileDimension;
+	}
+
+	/**
+	 * 设置文件尺寸
+	 * @param fileDimension
+	 */
+	public void setFileDimension(String fileDimension) {
+		this.fileDimension = fileDimension;
+	}
+	/**
+	 * 获取时长
+	 * @return
+	 */
+	public String getDuration() {
+		return duration;
+	}
+
+	/**
+	 * 设置时长
+	 * @param fileDimension
+	 */
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
 
 	/**
 	 * 取得文件类型
@@ -176,7 +216,7 @@ public class FileEntity extends Entity implements Serializable {
 	/**
 	 * 取得所属文件类型(1:编辑原稿 2:正文排版文件 3:封面扉页设计文件 4:设计素材文件 5:其他排版设计文件 6:条形码 7:封面扉页印刷文件 8:版权页文件 9:付型文件 10:其他印刷文件 11:封面(缩略图) 12:扉页(缩略图) 13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书)
 	 * 
-	 * @return 所属文件类型(1:编辑原稿 2:正文排版文件 3:封面扉页设计文件 4:设计素材文件 5:其他排版设计文件 6:条形码 7:封面扉页印刷文件 8:版权页文件 9:付型文件 10:其他印刷文件 11:封面(缩略图) 12:扉页(缩略图) 13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书)
+	 * @return 所属文件类型(1:编辑原稿 2:正文排版文件 3:封面扉页设计文件 4:设计素材文件 5:其他排版设计文件 6:条形码 7:封面扉页印刷文件 8:版权页文件 9:付型文件 10:其他印刷文件 11:封面(缩略图) 12:扉页(缩略图) 13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书 19:封面)
 	 */
 	public Integer getDocumentType() {
 		return documentType;
@@ -185,7 +225,7 @@ public class FileEntity extends Entity implements Serializable {
 	/**
 	 * 设定所属文件类型(1:编辑原稿 2:正文排版文件 3:封面扉页设计文件 4:设计素材文件 5:其他排版设计文件 6:条形码 7:封面扉页印刷文件 8:版权页文件 9:付型文件 10:其他印刷文件 11:封面(缩略图) 12:扉页(缩略图) 13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书)
 	 * 
-	 * @param documentType 所属文件类型(1:编辑原稿 2:正文排版文件 3:封面扉页设计文件 4:设计素材文件 5:其他排版设计文件 6:条形码 7:封面扉页印刷文件 8:版权页文件 9:付型文件 10:其他印刷文件 11:封面(缩略图) 12:扉页(缩略图) 13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书)
+	 * @param documentType 所属文件类型(1:编辑原稿 2:正文排版文件 3:封面扉页设计文件 4:设计素材文件 5:其他排版设计文件 6:条形码 7:封面扉页印刷文件 8:版权页文件 9:付型文件 10:其他印刷文件 11:封面(缩略图) 12:扉页(缩略图) 13:PD文件 14:EPUB文件 15:音频文件 16:视频文件 17:出版合同 18:获奖证书 19:封面)
 	 */
 	public void setDocumentType(Integer documentType) {
 		this.documentType = documentType;

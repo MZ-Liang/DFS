@@ -27,9 +27,9 @@ public enum FilePrefixEnum {
 	/** 其他印刷文件 */
 	PRIFIX_10("other_printed_file",10),
 	/** 封面(缩略图) */
-	PRIFIX_11("cover",11),
+	PRIFIX_11("cover_thumbnail",11),
 	/** 扉页(缩略图) */
-	PRIFIX_12("flyleaf",12),
+	PRIFIX_12("flyleaf_thumbnail",12),
 	/** PDF文件 */
 	PRIFIX_13("pdf_file",13),
 	/** EPUB文件 */
@@ -41,7 +41,10 @@ public enum FilePrefixEnum {
 	/** 出版合同 */
 	PRIFIX_17("publication_contract",17),
 	/** 获奖证书 */
-	PRIFIX_18("awards_file",18);
+	PRIFIX_18("awards_file",18),
+	/** 封面 */
+	PRIFIX_19("cover",19);
+	
 	
 	private String name;
 	private Integer index;

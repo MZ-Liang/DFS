@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -21,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dfs.api.constant.Code;
+import com.dfs.api.constant.StatusConstant;
 import com.dfs.api.entity.user.UserEntity;
-import com.dfs.api.model.BasicModel;
 import com.dfs.api.model.RelationBasicModel;
 import com.dfs.api.model.ReturnMsg;
 import com.dfs.api.model.TokenModel;
@@ -64,7 +62,7 @@ public class UserController extends BasicController{
     	@ApiImplicitParam(name="password",value="密码",paramType="query",required=true,dataType="String"),
     })
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Map<String, Object> login(String userName, String password ,HttpServletRequest request) throws Exception{
+    public Map<String, Object> login(String userName, String password) throws Exception{
     	String data="";
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
@@ -74,7 +72,7 @@ public class UserController extends BasicController{
 		subject.login(usernamePasswordToken);
 		
 		// 登录成功,生成token
-		TokenModel tokenModel=new TokenModel(userName, password, HttpUtility.getClientIp(request));
+		TokenModel tokenModel=new TokenModel(userName, password, HttpUtility.getClientIp(HttpUtility.getRequest()));
 		data=EncryptUtility.encodeToken(tokenModel);
 		Map<String, Object> map=new HashMap<>();
 		map.put("code", Code.OK);
@@ -121,7 +119,10 @@ public class UserController extends BasicController{
     @ApiOperation(value="获取当前登录用户的信息")
     @GetMapping("/user/info")
     public ReturnMsg<UserEntity> getUserInfo() {
-		return getSuccessMsg(ShiroUtil.getUserEntity());
+    	UserEntity entity=ShiroUtil.getUserEntity();
+    	// 去除密码
+    	entity.setPassword(null);
+		return getSuccessMsg(entity);
 	}
     
     @ApiOperation(value="更改密码",notes="根据用户id更改密码")
@@ -140,11 +141,11 @@ public class UserController extends BasicController{
     	UserEntity condition=new UserEntity();
     	condition.setId(id);
     	condition.setPassword(EncryptUtility.encodeMD5(oldPassword));
-    	condition.setStatus(Code.OK);
+    	condition.setStatus(StatusConstant.NORMAL);
     	
     	// 原密码不正确
     	if(CollectionUtils.isEmpty(userService.selectByCondition(condition))){
-    		msg=getErrorMsg("原密码不正确", condition);
+    		msg=getErrorMsg("原密码不正确", null);
     	}
     	// 修改密码
     	else {
@@ -176,11 +177,4 @@ public class UserController extends BasicController{
 		return getSuccessMsg(shiroUtil.getRoles());
     }
 
-    @ApiOperation(value="获取编辑下拉列表",notes="根据编辑类型获取编辑基本信息")
-    @ApiImplicitParam(name="editorType",value="编辑类型（1：责任编辑 2：美术编辑 3：运营编辑 4：质检员 5：版权经理）",
-    		required=true,paramType="query",dataType="int")
-    @GetMapping("/user/listEditor")
-    public ReturnMsg<List<BasicModel>> listEditorBasicInfo(Integer editorType) {
-		return getSuccessMsg(userService.listEditorBasicModel(editorType));
-	}
 }

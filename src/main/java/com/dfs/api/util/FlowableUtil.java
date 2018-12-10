@@ -1,5 +1,7 @@
 package com.dfs.api.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dfs.api.entity.user.UserEntity;
@@ -71,7 +73,7 @@ public class FlowableUtil {
 	 * @param client
 	 * @throws Exception
 	 */
-	public FlowableUtil(TokenModel admin, String client, HttpClientUtil httpClientUtil) throws Exception {
+	public FlowableUtil(TokenModel admin, String client, HttpClientUtil httpClientUtil) {
 		super();
 		this.admin = admin;
 		this.client = client;
@@ -83,7 +85,12 @@ public class FlowableUtil {
 		this.contentClient = client + FLOWABLE_CONTENT_HOME;
 		this.appClient = client + FLOWABLE_APP_HOME;
 		this.httpClientUtil = httpClientUtil;
-		initPrivaleges();
+		try {
+			// 初始化flowable权限id
+			initPrivaleges();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -94,6 +101,7 @@ public class FlowableUtil {
 	private void initPrivaleges() throws Exception {
 		// 请求flowable权限列表
 		HttpResult result = privileges();
+		
 		// 200 请求成功，否则抛异常
 		if (200 == result.getCode()) {
 			// json解析权限列表
@@ -124,8 +132,6 @@ public class FlowableUtil {
 					break;
 				}
 			}
-		} else {
-			throw new Exception();
 		}
 	}
 
@@ -136,7 +142,7 @@ public class FlowableUtil {
 	 * @throws Exception
 	 */
 	public HttpResult privileges() throws Exception {
-		return httpClientUtil.doGet(idmClient + "/privileges", "rest-admin:test", null);
+		return httpClientUtil.doGet(idmClient + "/privileges", getAuthorization(admin), null);
 	}
 
 	/**
@@ -247,6 +253,20 @@ public class FlowableUtil {
 		buffer.append(userEntity.getPassword());
 		return buffer.toString();
 	}
+	
+	/**
+	 * 获取flowable身份信息
+	 * 
+	 * @param userEntity 用户实体
+	 * @return
+	 */
+	public static String getAuthorization(TokenModel token) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(token.getAccessKey());
+		buffer.append(":");
+		buffer.append(token.getSecretKey());
+		return buffer.toString();
+	}
 
 	/**
 	 * 获取flowable管理员信息
@@ -333,8 +353,12 @@ public class FlowableUtil {
 	 * 获取访问flowable rest api权限id
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public String getPrivalegeRestApiId() {
+	public String getPrivalegeRestApiId() throws Exception {
+		if (StringUtils.isBlank(privalegeRestApiId)) {
+			this.initPrivaleges();
+		}
 		return privalegeRestApiId;
 	}
 
@@ -342,8 +366,12 @@ public class FlowableUtil {
 	 * 获取访问flowable admin权限id
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public String getPrivalegeAdminId() {
+	public String getPrivalegeAdminId() throws Exception {
+		if (StringUtils.isBlank(privalegeAdminId)) {
+			this.initPrivaleges();
+		}
 		return privalegeAdminId;
 	}
 
@@ -351,8 +379,12 @@ public class FlowableUtil {
 	 * 获取访问flowable idm权限id
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public String getPrivalegeIdmId() {
+	public String getPrivalegeIdmId() throws Exception {
+		if (StringUtils.isBlank(privalegeIdmId)) {
+			this.initPrivaleges();
+		}
 		return privalegeIdmId;
 	}
 
@@ -360,8 +392,12 @@ public class FlowableUtil {
 	 * 获取访问flowable modeler权限id
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public String getPrivalegeModelerId() {
+	public String getPrivalegeModelerId() throws Exception {
+		if (StringUtils.isBlank(privalegeModelerId)) {
+			this.initPrivaleges();
+		}
 		return privalegeModelerId;
 	}
 
@@ -369,8 +405,12 @@ public class FlowableUtil {
 	 * 获取访问flowable task权限id
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public String getPrivalegeTaskId() {
+	public String getPrivalegeTaskId() throws Exception {
+		if (StringUtils.isBlank(privalegeTaskId)) {
+			this.initPrivaleges();
+		}
 		return privalegeTaskId;
 	}
 }

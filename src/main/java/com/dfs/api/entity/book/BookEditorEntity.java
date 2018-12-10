@@ -8,7 +8,7 @@ import com.dfs.api.core.entity.Entity;
  * 图书与编辑关联表实体
  * 
  * @author Ming
- * @date 2018-11-26
+ * @date 2018-12-10
  */
 public class BookEditorEntity extends Entity implements Serializable {
 
@@ -18,11 +18,8 @@ public class BookEditorEntity extends Entity implements Serializable {
 	/** 图书id */
 	private Long bookId;
 
-	/** 编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理) */
-	private Integer editorType;
-
-	/** 编辑id(用户) */
-	private Long userId;
+	/** 编辑id */
+	private Long editorId;
 
 	/**
 	 * 取得图书id
@@ -43,39 +40,21 @@ public class BookEditorEntity extends Entity implements Serializable {
 	}
 
 	/**
-	 * 取得编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理)
+	 * 取得编辑id
 	 * 
-	 * @return 编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理)
+	 * @return 编辑id
 	 */
-	public Integer getEditorType() {
-		return editorType;
+	public Long getEditorId() {
+		return editorId;
 	}
 
 	/**
-	 * 设定编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理)
+	 * 设定编辑id
 	 * 
-	 * @param editorType 编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理)
+	 * @param editorId 编辑id
 	 */
-	public void setEditorType(Integer editorType) {
-		this.editorType = editorType;
-	}
-
-	/**
-	 * 取得编辑id(用户)
-	 * 
-	 * @return 编辑id(用户)
-	 */
-	public Long getUserId() {
-		return userId;
-	}
-
-	/**
-	 * 设定编辑id(用户)
-	 * 
-	 * @param userId 编辑id(用户)
-	 */
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setEditorId(Long editorId) {
+		this.editorId = editorId;
 	}
 
 	/**
@@ -91,8 +70,7 @@ public class BookEditorEntity extends Entity implements Serializable {
 		sb.append("Hash = ").append(hashCode());
 		sb.append(", id=").append(id);
 		sb.append(", bookId=").append(bookId);
-		sb.append(", editorType=").append(editorType);
-		sb.append(", userId=").append(userId);
+		sb.append(", editorId=").append(editorId);
 		sb.append("]");
 		return sb.toString();
 	}

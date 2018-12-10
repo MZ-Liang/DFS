@@ -1,6 +1,6 @@
 package com.dfs.api.core.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
@@ -55,7 +55,7 @@ public class CommonfConfig {
 	 * @throws Exception 
 	 */
 	@Bean
-	public FlowableUtil getFlowableUtil(@Autowired HttpClientUtil httpClientUtil) throws Exception {
+	public FlowableUtil getFlowableUtil(@Qualifier("httpClientUtil") HttpClientUtil httpClientUtil) {
 		return new FlowableUtil(new TokenModel(accessKey, secretKey, client), client,httpClientUtil);
 	}
 }

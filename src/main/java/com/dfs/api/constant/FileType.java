@@ -97,4 +97,9 @@ public class FileType {
 	 */
 	public static final Integer FILE_TYPE_18=Integer.valueOf(18);
 	
+	/**
+	 * 封面
+	 */
+	public static final Integer FILE_TYPE_19=Integer.valueOf(19);
+	
 }

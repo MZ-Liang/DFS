@@ -5,7 +5,6 @@ import java.util.Set;
 
 import com.dfs.api.core.service.SimpleService;
 import com.dfs.api.entity.user.UserEntity;
-import com.dfs.api.model.BasicModel;
 import com.dfs.api.model.user.UserModel;
 
 
@@ -36,13 +35,6 @@ public interface UserService extends SimpleService<Long, UserEntity>{
 	 * @return
 	 */
 	UserEntity findByUserName(String userName,Integer status);
-
-	/**
-	 * 根据编辑类型获取编辑基本模型
-	 * @param editorType 编辑类型
-	 * @return
-	 */
-	List<BasicModel> listEditorBasicModel(Integer editorType);
 
 	/**
 	 * 创建或保存用户

@@ -121,7 +121,7 @@ public class MinioUtil {
 		action.setRequestMethod(RequestMethod.GET.toString());
 		return action;
 	}
-
+	
 	/**
 	 * 为HTTP GET操作生成预签名URL。即使存储桶是私有的，浏览器/移动客户端也可以指向此URL以直接下载对象。
 	 * 此预签名URL可以具有相关的到期时间（默认时间），之后它将不再运行。

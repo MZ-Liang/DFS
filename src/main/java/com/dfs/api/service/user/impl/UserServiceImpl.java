@@ -9,7 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dfs.api.constant.Code;
+import com.dfs.api.constant.StatusConstant;
 import com.dfs.api.core.mapper.SimpleMapper;
 import com.dfs.api.core.service.impl.SimpleServiceImpl;
 import com.dfs.api.entity.user.UserEntity;
@@ -18,7 +18,6 @@ import com.dfs.api.mapper.user.PermissionMapper;
 import com.dfs.api.mapper.user.RoleMapper;
 import com.dfs.api.mapper.user.UserMapper;
 import com.dfs.api.mapper.user.UserRoleMapper;
-import com.dfs.api.model.BasicModel;
 import com.dfs.api.model.HttpResult;
 import com.dfs.api.model.RelationBasicModel;
 import com.dfs.api.model.user.UserModel;
@@ -92,18 +91,6 @@ public class UserServiceImpl extends SimpleServiceImpl<Long, UserEntity> impleme
 	}
 
 	/**
-	 * 根据编辑类型获取编辑基本模型
-	 * 
-	 * @param editorType 编辑类型
-	 * @return
-	 */
-	@Override
-	public List<BasicModel> listEditorBasicModel(Integer editorType) {
-		List<BasicModel> list = userMapper.listEditorBasicModel(editorType);
-		return list;
-	}
-
-	/**
 	 * 创建或保存用户
 	 * 
 	 * @param userModel 用户模型
@@ -134,9 +121,12 @@ public class UserServiceImpl extends SimpleServiceImpl<Long, UserEntity> impleme
 
 		// 插入用户实体
 		if (null == entity.getId()) {
+			entity.setStatus(StatusConstant.NORMAL);
 			userMapper.insert(entity);
+			
 			// 添加flowable用户
 			HttpResult result=flowableUtil.createFlowableUser(entity.getId(), entity.getUserName(), entity.getPassword());
+			System.out.println(result);
 			// 不成功，抛异常
 			if (201 != result.getCode()) {
 				throw new Exception();
@@ -191,7 +181,7 @@ public class UserServiceImpl extends SimpleServiceImpl<Long, UserEntity> impleme
 		// 更改内容
 		UserEntity entity = new UserEntity();
 		// 删除状态
-		entity.setStatus(Code.ERROR);
+		entity.setStatus(StatusConstant.DELETED);
 		// 遍历
 		for (Long id : ids) {
 			// 设置id

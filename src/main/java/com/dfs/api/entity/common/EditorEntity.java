@@ -5,80 +5,38 @@ import java.io.Serializable;
 import com.dfs.api.core.entity.Entity;
 
 /**
- * 编辑合表实体
+ * 编辑表实体
  * 
  * @author Ming
- * @date 2018-11-13
+ * @date 2018-12-10
  */
 public class EditorEntity extends Entity implements Serializable {
 
 	/** SerialVersionUID */
 	private static final long serialVersionUID = 1L;
 
-	/** 名称 */
+	/** 编辑名称 */
 	private String name;
 
-	/** 名称(英文) */
-	private String nameEn;
-
-	/** 角色 */
-	private Long role;
-
 	/** 编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理) */
-	private Integer editType;
+	private Integer editorType;
 
 	/**
-	 * 取得名称
+	 * 取得编辑名称
 	 * 
-	 * @return 名称
+	 * @return 编辑名称
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * 设定名称
+	 * 设定编辑名称
 	 * 
-	 * @param name 名称
+	 * @param name 编辑名称
 	 */
 	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * 取得名称(英文)
-	 * 
-	 * @return 名称(英文)
-	 */
-	public String getNameEn() {
-		return nameEn;
-	}
-
-	/**
-	 * 设定名称(英文)
-	 * 
-	 * @param nameEn 名称(英文)
-	 */
-	public void setNameEn(String nameEn) {
-		this.nameEn = nameEn;
-	}
-
-	/**
-	 * 取得角色
-	 * 
-	 * @return 角色
-	 */
-	public Long getRole() {
-		return role;
-	}
-
-	/**
-	 * 设定角色
-	 * 
-	 * @param role 角色
-	 */
-	public void setRole(Long role) {
-		this.role = role;
+		this.name = name == null ? null : name.trim();
 	}
 
 	/**
@@ -86,23 +44,23 @@ public class EditorEntity extends Entity implements Serializable {
 	 * 
 	 * @return 编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理)
 	 */
-	public Integer getEditType() {
-		return editType;
+	public Integer getEditorType() {
+		return editorType;
 	}
 
 	/**
 	 * 设定编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理)
 	 * 
-	 * @param editType 编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理)
+	 * @param editorType 编辑类型(1:责任编辑 2:美术编辑 3:运营编辑 4:质检员 5:版权经理)
 	 */
-	public void setEditType(Integer editType) {
-		this.editType = editType;
+	public void setEditorType(Integer editorType) {
+		this.editorType = editorType;
 	}
 
 	/**
-	 * 取得编辑合表实体字符串
+	 * 取得编辑表实体字符串
 	 * 
-	 * @return 编辑合表实体字符串
+	 * @return 编辑表实体字符串
 	 */
 	@Override
 	public String toString() {
@@ -112,9 +70,7 @@ public class EditorEntity extends Entity implements Serializable {
 		sb.append("Hash = ").append(hashCode());
 		sb.append(", id=").append(id);
 		sb.append(", name=").append(name);
-		sb.append(", nameEn=").append(nameEn);
-		sb.append(", role=").append(role);
-		sb.append(", editType=").append(editType);
+		sb.append(", editorType=").append(editorType);
 		sb.append("]");
 		return sb.toString();
 	}
